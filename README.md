@@ -4,7 +4,7 @@ Sample project to code-sign and publish an iOS and macOS app without a mac*
 
 *\*(we'll use a mac BUT using Github Action)*
 
-The two sample test project and simple "Hello World".
+The two sample test project are simple "Hello World".
 
 By using [fastlane match](https://docs.fastlane.tools/actions/match/) and [Github Action](https://github.com/features/actions) we can compile and publish an iOS / macOS app without ever using a mac in person.
 
@@ -127,6 +127,22 @@ We need all the **repo** scope enabled. Click **Generate token** and save the va
 Save this secret in the github repository for your project:
 
 - `GH_PAT`: The value of your newly generated token
+
+## Secrets reviews
+
+Makes sure you have all of these 11 secrets in your github repository:
+
+- `IOS_BUNDLE_ID`
+- `MAC_BUNDLE_ID`
+- `APPSTORE_ISSUER_ID`
+- `APPSTORE_KEY_ID`
+- `APPSTORE_P8`
+- `FASTLANE_USER`
+- `FASTLANE_PASSWORD`
+- `FASTLANE_SESSION`
+- `MATCH_REPOSITORY`
+- `MATCH_PASSWORD`
+- `GH_PAT`
 
 ## Initialize fastlane match
 
