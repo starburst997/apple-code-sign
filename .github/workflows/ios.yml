@@ -4,77 +4,22 @@ on:
   #push
   #pull_request
   workflow_dispatch:
-  workflow_call:
-    inputs:
-      project_path:
-        type: string
-      project_target:
-        type: string
-      plist_path:
-        type: string
-      version:
-        type: string
-      build_path:
-        type: string
 
 jobs:
   releaseToAppStore:
     name: Release to Testflight
-    runs-on: macos-13 # Ventura w/ xCode 15.0.1
+    runs-on: macos-13
     timeout-minutes: 30
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: starburst997/mac-code-sign/.github/workflows/ios.yml@v1
+        secrets: inherit
         with:
-          submodules: recursive
-          token: ${{ secrets.GH_PAT }}
-          lfs: true
-
-      - name: Increment IOS_BUILD_NUMBER locally
-        id: versions
-        env:
-          BUILD_NUMBER: ${{ vars.IOS_BUILD_NUMBER }}
-        run: |
-          echo "build_number=$(($BUILD_NUMBER+1))" >> $GITHUB_OUTPUT
-          echo "BUILD_NUMBER=$(($BUILD_NUMBER+1))" >> $GITHUB_ENV
-      - run: echo "BUILD_NUMBER is now $BUILD_NUMBER"
-
-      - name: Increment Version
-        uses: starburst997/increment@v2
-        with:
-          name: 'IOS_BUILD_NUMBER'
-          amount: 1
-          token: ${{ secrets.GH_PAT }}
-
-      - name: Run fastlane
-        env:
-          APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
-          APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-
-          MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
-          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
-          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
-          APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
-
-          IOS_BUILD_PATH: ${{ format('{0}/${{ inputs.project_path }}', github.workspace) }}
-          IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
-          
-          ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: false
-
-          PROJECT_TARGET: ${{ inputs.project_target }}
-          XCODEPROJ_PATH: ${{ inputs.xcodeproj_path }}
-          PLIST_PATH: ${{ inputs.plist_path }}
-          VERSION: "${{ inputs.version }}"
-          BUILD_PATH: ${{ inputs.build_path }}
-        run: |
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          bundle install
-          bundle exec fastlane ios beta
+          project_path: iOS
+          project_target: Test
+          xcodeproj_path: Test.xcodeproj
+          plist_path: Test/Test.plist
+          version: "2025.1"
+          build_path: build
 
       - uses: actions/upload-artifact@v4
         with:

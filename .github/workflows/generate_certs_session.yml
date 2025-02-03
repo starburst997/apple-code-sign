@@ -11,29 +11,5 @@ jobs:
   generate_certs:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2
-          bundler-cache: true
-
-      - name: Fastlane
-        shell: bash
-        run: |
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          bundle exec fastlane ios sync_certificates_session
-          bundle exec fastlane mac sync_certificates_session
-        env:
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-
-          MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
-          IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
-
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
-          MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
-          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      - uses: starburst997/mac-code-sign/.github/workflows/generate_certs_session.yml@v1
+        secrets: inherit
