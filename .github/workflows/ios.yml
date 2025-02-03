@@ -4,22 +4,33 @@ on:
   workflow_call:
     inputs:
       project_path:
+        required: true
         type: string
       xcodeproj_path:
+        required: true
         type: string
       project_target:
+        required: true
         type: string
       plist_path:
+        required: true
         type: string
       version:
+        required: true
         type: string
       artifact:
+        required: false
         type: boolean
+      macos_vm:
+        description: 'The macos machine to runs-on'
+        default: 'macos-13' # Ventura w/ xCode 15.0.1
+        required: false
+        type: string
 
 jobs:
   build:
     name: Build iOS
-    runs-on: macos-13 # Ventura w/ xCode 15.0.1
+    runs-on: ${{ inputs.macos_vm }}
     timeout-minutes: 30
     steps:
       - name: Checkout Repository

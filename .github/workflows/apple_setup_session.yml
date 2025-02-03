@@ -9,6 +9,11 @@ on:
         type: boolean
       generate_developer_id:
         type: boolean
+      macos_vm:
+        description: 'The macos machine to runs-on'
+        default: 'macos-13'
+        required: false
+        type: string
 
 jobs:
   setup:
@@ -38,7 +43,7 @@ jobs:
           MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
 
   generate_certs_all:
-    runs-on: macos-latest
+    runs-on: ${{ inputs.macos_vm }}
     needs: [setup]
     if: ${{ (inputs.generate_macos == true) && (inputs.generate_ios == true) }}
     steps:
@@ -71,7 +76,7 @@ jobs:
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
 
   generate_certs_ios:
-    runs-on: macos-latest
+    runs-on: ${{ inputs.macos_vm }}
     needs: [setup]
     if: ${{ (inputs.generate_macos == false) && (inputs.generate_ios == true) }}
     steps:
@@ -102,7 +107,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
   generate_certs_macos:
-    runs-on: macos-latest
+    runs-on: ${{ inputs.macos_vm }}
     needs: [setup]
     if: ${{ (inputs.generate_macos == true) && (inputs.generate_ios == false) }}
     steps:
