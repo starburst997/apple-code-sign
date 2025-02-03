@@ -46,11 +46,19 @@ Adding the additional platforms ensure we can call `fastlane` from the Github Ac
 
 ## Create app in App Store Connect
 
-Register your app in [App Store Connect](https://appstoreconnect.apple.com/apps), click on the **(+)** button and select **New App**. You might create a single app for both platforms.
+<table align="center"><tr><td>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/create_app_01.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/create_app_01.png" alt="New App" title="New App" /></a><p align="center">1</p>
+</td><td>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/create_app_02.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/create_app_02.png" alt="New App Form" title="New App Form"/></a><p align="center">2</p>
+</td><td>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/create_app_03.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/create_app_03.png" alt="Create Bundle ID" title="Create Bundle ID"/></a><p align="center">3</p>
+</td></tr></table>
 
-You'll be asked to pick a **Bundle ID** which can be created in the **Apple Developer** website under the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/bundleId/add/bundle) section.
+1. Register your app in [App Store Connect](https://appstoreconnect.apple.com/apps), click on the **(+)** button and select **New App**. You might create a single app for both platforms.
 
-Remember it's value and pick the **Explicit** option.
+2. You'll be asked to pick a **Bundle ID** which can be created in the **Apple Developer** website under the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/bundleId/add/bundle) section.
+
+3. Remember it's value and pick the **Explicit** option.
 
 ### Save secrets
 
@@ -61,15 +69,23 @@ Save these 2 secrets in the github repository for your project (both equals if y
 
 ## Generate App Store Connect API Key
 
+<table align="center"><tr><td>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/api_key_01.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/api_key_01.png" alt="New API Key" title="New API Key" /></a><p align="center">1</p>
+</td><td>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/api_key_02.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/api_key_01.png" alt="New API Key form" title="New API Key form"/></a><p align="center">2</p>
+</td></tr></table>
+
 App Store Connect API Key is the recomended way to sign in using fastlane, however if you want to also sign macOS app for individual distribution on your website, you will need to use the standard username / password procedure, this is because it requires the **Account Holder** permission to do so which is not (yet) possible with API Key. We'll discuss that in the next steps.
 
-Go to your [Users and Access](https://appstoreconnect.apple.com/access/integrations/api) page on [App Store Connect](https://appstoreconnect.apple.com/). Go to the **Integrations** tab and makes sure to select the section **App Store Connect API** on the left side panel and the **Team Keys** tab.
-
+1. Go to your [Users and Access](https://appstoreconnect.apple.com/access/integrations/api) page on [App Store Connect](https://appstoreconnect.apple.com/). Go to the **Integrations** tab and makes sure to select the section **App Store Connect API** on the left side panel and the **Team Keys** tab.
+<br/><br/>
 Takes note of the **Issuer ID** value.
 
-Create a new Key by clicking the **(+)** button, give it a name and select the **Admin** access.
-
+2. Create a new Key by clicking the **(+)** button, give it a name and select the **Admin** access.
+<br/><br/>
 Takes note of the **Key ID** and download the generated **P8 file** (open the file in a text editor, we will save the entire value inside a secret).
+
+*(Sadly, **Individual Keys** won't work since they are not fully compatible yet with **match** / **sigh** but that might change in the future)*
 
 ### Save secrets
 
@@ -93,7 +109,7 @@ Generate a **Session Token** using [fastlane spaceauth](https://docs.fastlane.to
 fastlane spaceauth -u YOUR_USERNAME
 ```
 
-Copy the generated value (without the `export FASTLANE_SESSION=` prefix).
+Copy *(right-click in most terminal)* the generated value (without the `export FASTLANE_SESSION=` prefix).
 
 ### Save secrets
 
@@ -118,11 +134,18 @@ Save these 2 secrets in the github repository for your **project** (not the newl
 
 ## Generate a Personal Access Token (PAT)
 
+
+<table align="center"><tr><td>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/pat_01.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/pat_01.png" alt="Generate New Token (Classic)" title="Generate New Token (Classic)" /></a><p align="center">1</p>
+</td><td>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/pat_02.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/pat_02.png" alt="Use repo score" title="Use repo score"/></a><p align="center">2</p>
+</td></tr></table>
+
 We also need to generate a **Personal Access Token** for Github. 
 
-Visit your [settings page](https://github.com/settings/tokens) and click on **Generate new token** and select **Generate new token (classic)**.
+1. Visit your [settings page](https://github.com/settings/tokens) and click on **Generate new token** and select **Generate new token (classic)**.
 
-We need all the **repo** scope enabled. Click **Generate token** and save the value.
+2. We need all the **repo** scope enabled. Click **Generate token** and save the value.
 
 ### Save secrets
 
