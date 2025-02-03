@@ -183,13 +183,13 @@ end
 #### fastlane/Fastfile ([iOS](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/iOS/Fastfile) / [macOS](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/macOS/Fastfile))
 ```ruby
 import_from_git(
-  url: "git@github.com:starburst997/apple-code-sign.git",
+  url: "https://github.com/starburst997/apple-code-sign.git",
   branch: "v1",
   path: "fastlane/iOS/Fastfile"
 )
 
 import_from_git(
-  url: "git@github.com:starburst997/apple-code-sign.git",
+  url: "https://github.com/starburst997/apple-code-sign.git",
   branch: "v1",
   path: "fastlane/macOS/Fastfile"
 )

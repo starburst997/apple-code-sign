@@ -1,11 +1,11 @@
 import_from_git(
-  url: "git@github.com:starburst997/apple-code-sign.git",
+  url: "https://github.com/starburst997/apple-code-sign.git",
   branch: "v1",
   path: "fastlane/iOS/Fastfile"
 )
 
 import_from_git(
-  url: "git@github.com:starburst997/apple-code-sign.git",
+  url: "https://github.com/starburst997/apple-code-sign.git",
   branch: "v1",
   path: "fastlane/macOS/Fastfile"
 )
