@@ -285,7 +285,7 @@ If you want to upload the artifact to use in your workflow (ex; upload to S3 aft
 
 ## Initialize fastlane match
 
-Go into the **Actions** tab of your project's github repository and run the action **Apple Setup (Session Token)**
+Go into the **Actions** tab of your project's github repository and run the action **Apple Setup (Session Token)** (or the **API Key** variant).
 
 Notice that your match repository will now be populated with the certificates and profiles for your app, it will also save the deploy key as a secret inside your repo.
 
