@@ -10,7 +10,7 @@ jobs:
     name: Set envs
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.output.outputs.version }}
+      workspace: ${{ steps.output.outputs.workspace }}
     steps:
       - id: output
         name: Get github workspace
