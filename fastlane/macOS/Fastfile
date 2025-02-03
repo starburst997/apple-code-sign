@@ -92,13 +92,13 @@ platform :mac do
   desc "Deliver a new Beta build to Apple TestFlight"
   lane :beta do
     # Missing Export Compliance can also be set through Deliverfile
-    update_info_plist(
-      xcodeproj: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
-      plist_path: "#{ENV['PLIST_PATH']}",
-      block: proc do |plist|
-        plist['ITSAppUsesNonExemptEncryption'] = false
-      end
-    )
+    #update_info_plist(
+    #  xcodeproj: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+    #  plist_path: "#{ENV['PLIST_PATH']}",
+    #  block: proc do |plist|
+    #    plist['ITSAppUsesNonExemptEncryption'] = false
+    #  end
+    #)
 
     build
     upload_to_testflight(skip_waiting_for_build_processing: false)
