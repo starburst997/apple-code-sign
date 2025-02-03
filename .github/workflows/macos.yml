@@ -21,6 +21,9 @@ on:
       artifact:
         required: false
         type: boolean
+      generate_appstore:
+        required: false
+        type: boolean
       generate_developer_id:
         required: false
         type: boolean
