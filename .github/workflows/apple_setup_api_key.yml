@@ -91,6 +91,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
           MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
 
   generate_certs_ios:
     runs-on: macos-latest
@@ -153,3 +154,4 @@ jobs:
           GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
           MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}

@@ -49,12 +49,17 @@ platform :mac do
       app_identifier: ENV["MAC_BUNDLE_ID"]
     )
     
-    match(
-      type: "developer_id",
-      storage_mode: "git",
-      git_url: "git@github.com:#{match_org}/#{match_repo}.git",
-      app_identifier: ENV["MAC_BUNDLE_ID"]
-    )
+    if ENV['GENERATE_DEVELOPER_ID'] || ENV['GENERATE_DEVELOPER_ID'] == "true"
+      puts "Generating Developer ID"
+      match(
+        type: "developer_id",
+        storage_mode: "git",
+        git_url: "git@github.com:#{match_org}/#{match_repo}.git",
+        app_identifier: ENV["MAC_BUNDLE_ID"]
+      )
+    else
+      puts "Skipping Developer ID"
+    end
   end
   
   desc "Sync codesigning certificates (API Key / All)"
@@ -74,13 +79,18 @@ platform :mac do
       app_identifier: ENV["MAC_BUNDLE_ID"]
     )
 
-    match(
-      type: "developer_id",
-      storage_mode: "git",
-      readonly: true,
-      git_url: "git@github.com:#{match_org}/#{match_repo}.git",
-      app_identifier: ENV["MAC_BUNDLE_ID"]
-    )
+    if ENV['GENERATE_DEVELOPER_ID'] || ENV['GENERATE_DEVELOPER_ID'] == "true"
+      puts "Generating Developer ID"
+      match(
+        type: "developer_id",
+        storage_mode: "git",
+        readonly: true,
+        git_url: "git@github.com:#{match_org}/#{match_repo}.git",
+        app_identifier: ENV["MAC_BUNDLE_ID"]
+      )
+    else
+      puts "Skipping Developer ID"
+    end
   end
 
   desc "Deliver a new Release build to the App Store"
@@ -91,15 +101,6 @@ platform :mac do
 
   desc "Deliver a new Beta build to Apple TestFlight"
   lane :beta do
-    # Missing Export Compliance can also be set through Deliverfile
-    #update_info_plist(
-    #  xcodeproj: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
-    #  plist_path: "#{ENV['PLIST_PATH']}",
-    #  block: proc do |plist|
-    #    plist['ITSAppUsesNonExemptEncryption'] = false
-    #  end
-    #)
-
     build
     upload_to_testflight(skip_waiting_for_build_processing: false)
   end
