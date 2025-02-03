@@ -218,7 +218,7 @@ platform :mac do
     )
 
     build_mac_app( #alias: gym
-      #export_method: 'developer-id',
+      export_method: 'app-store', # 'developer-id',
       project: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
       scheme: 'Test',
       xcargs: '-allowProvisioningUpdates'
