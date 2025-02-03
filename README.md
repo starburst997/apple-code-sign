@@ -128,9 +128,17 @@ Save this secret in the github repository for your project:
 
 - `GH_PAT`: The value of your newly generated token
 
+## Additionals secrets
+
+Also add these 3 secrets to your github repository:
+
+- `APPLE_DEVELOPER_EMAIL`: Your Apple ID
+- `APPLE_CONNECT_EMAIL`: Apple Connect email (if using a single shared developer this is the same as `APPLE_DEVELOPER_EMAIL`)
+- `APPLE_TEAM_ID`: Team Id from your [Apple Developer Account - Membership Details](https://developer.apple.com/account/#/membership/)
+
 ## Secrets reviews
 
-Makes sure you have all of these 11 secrets in your github repository:
+Makes sure you have all of these 14 secrets in your github repository:
 
 - `IOS_BUNDLE_ID`
 - `MAC_BUNDLE_ID`
@@ -143,6 +151,9 @@ Makes sure you have all of these 11 secrets in your github repository:
 - `MATCH_REPOSITORY`
 - `MATCH_PASSWORD`
 - `GH_PAT`
+- `APPLE_DEVELOPER_EMAIL`
+- `APPLE_CONNECT_EMAIL`
+- `APPLE_TEAM_ID`
 
 ## Initialize fastlane match
 

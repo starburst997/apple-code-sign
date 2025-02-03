@@ -1,0 +1,52 @@
+name: Build Mac (TestFlight)
+
+on: 
+  #push
+  #pull_request
+  workflow_dispatch:
+    inputs:
+      notes:
+        type: string
+        description: Release Notes
+
+jobs:
+  releaseToAppStore:
+    name: Release to Testflight
+    runs-on: macos-13 # Ventura w/ xCode 15.0.1
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GH_PAT }}
+          lfs: true
+
+      - name: Run fastlane
+        env:
+          APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
+          APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+
+          MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
+          MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
+
+          MAC_BUILD_PATH: ${{ format('{0}/macOS', github.workspace) }}
+          MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
+          PROJECT_NAME: Test
+
+          ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: false
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+          bundle exec fastlane mac beta
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-app
+          path: macOS
