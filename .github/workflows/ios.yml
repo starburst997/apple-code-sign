@@ -16,3 +16,4 @@ jobs:
       plist_path: Test/Test.plist
       version: "2025.1"
       build_path: build
+      artifact: true
