@@ -45,7 +45,6 @@ jobs:
   generate_certs_all:
     runs-on: ${{ inputs.macos_vm }}
     needs: [setup]
-    if: ${{ (inputs.generate_macos == true) && (inputs.generate_ios == true) }}
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -56,11 +55,11 @@ jobs:
       - name: Fastlane
         shell: bash
         run: |
-          MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
           eval "$(ssh-agent -s)"
+          MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          bundle exec fastlane ios sync_certificates_session
-          bundle exec fastlane mac sync_certificates_session
+          ((GENERATE_IOS)) && bundle exec fastlane ios sync_certificates_session
+          ((GENERATE_MACOS)) && bundle exec fastlane mac sync_certificates_session
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
@@ -74,66 +73,5 @@ jobs:
           MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
-
-  generate_certs_ios:
-    runs-on: ${{ inputs.macos_vm }}
-    needs: [setup]
-    if: ${{ (inputs.generate_macos == false) && (inputs.generate_ios == true) }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2
-          bundler-cache: true
-
-      - name: Fastlane
-        shell: bash
-        run: |
-          MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          bundle exec fastlane ios sync_certificates_session
-        env:
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-
-          MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
-          IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
-
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
-          MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
-  generate_certs_macos:
-    runs-on: ${{ inputs.macos_vm }}
-    needs: [setup]
-    if: ${{ (inputs.generate_macos == true) && (inputs.generate_ios == false) }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2
-          bundler-cache: true
-
-      - name: Fastlane
-        shell: bash
-        run: |
-          MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          bundle exec fastlane mac sync_certificates_session
-        env:
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-
-          MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
-          IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
-
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
-          MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
+          GENERATE_IOS: ${{ inputs.generate_ios }}
+          GENERATE_MACOS: ${{ inputs.generate_macos }}

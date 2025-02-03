@@ -88,12 +88,14 @@ jobs:
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: build
 
+          GENERATE_APPSTORE: ${{ inputs.generate_appstore }}
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           bundle install
-          bundle exec fastlane mac beta
+          ((GENERATE_APPSTORE)) && bundle exec fastlane mac beta
+          ((GENERATE_DEVELOPER_ID)) && bundle exec fastlane mac beta
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact }}

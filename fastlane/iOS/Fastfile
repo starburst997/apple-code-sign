@@ -100,4 +100,6 @@ platform :ios do
       xcargs: '-allowProvisioningUpdates'
     )
   end
+
+  # TODO: Create a lane for AD-HOC release, personally, I don't have a use for it so probably won't implement unless someone request it
 end
