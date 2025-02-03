@@ -83,8 +83,13 @@ platform :ios do
       profile_uuid: ENV["sigh_#{ENV['IOS_BUNDLE_ID']}_appstore"]
     )
 
+    increment_version_number(
+      version_number: "1.0.#{ENV['IOS_BUILD_NUMBER']}"
+    )
+
     build_app( #alias: gym
       project: "#{ENV['IOS_BUILD_PATH']}/Test.xcodeproj",
+      output_directory: 'build',
       scheme: 'Test',
       xcargs: '-allowProvisioningUpdates'
     )
@@ -218,9 +223,14 @@ platform :mac do
       profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos"]
     )
 
+    increment_version_number(
+      version_number: "1.0.#{ENV['MAC_BUILD_NUMBER']}"
+    )
+
     build_mac_app( #alias: gym
       export_method: 'app-store', # 'developer-id',
       project: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
+      output_directory: 'build',
       scheme: 'Test',
       xcargs: '-allowProvisioningUpdates',
       export_options: {

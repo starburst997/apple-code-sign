@@ -18,6 +18,22 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           lfs: true
 
+      - name: Increment MAC_BUILD_NUMBER locally
+        id: versions
+        env:
+          VERSION: ${{ vars.MAC_BUILD_NUMBER }}
+        run: |
+          echo "mac_build_number=$(($MAC_BUILD_NUMBER+1))" >> $GITHUB_OUTPUT
+          echo "MAC_BUILD_NUMBER=$(($MAC_BUILD_NUMBER+1))" >> $GITHUB_ENV
+      - run: echo "MAC_BUILD_NUMBER is now $MAC_BUILD_NUMBER"
+
+      - name: Increment Version remotely
+        uses: starburst997/increment@v2
+        with:
+          name: 'MAC_BUILD_NUMBER'
+          amount: 1
+          token: ${{ secrets.GH_PAT }}
+
       - name: Run fastlane
         env:
           APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
@@ -46,4 +62,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: build-app
-          path: macOS
+          path: build
