@@ -93,12 +93,15 @@ jobs:
 
           GENERATE_APPSTORE: ${{ inputs.generate_appstore }}
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
+        shell: bash
         run: |
+          set -x
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           bundle install
           [[ $GENERATE_APPSTORE == true ]] && bundle exec fastlane mac beta
           [[ $GENERATE_DEVELOPER_ID == true ]] && bundle exec fastlane mac developer_id
+          echo "Finished!"
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact }}
