@@ -17,4 +17,4 @@ jobs:
       version: "2025.1"
       artifact: true
       generate_appstore: true
-      generate_developer_id: true
+      generate_developer_id: false
