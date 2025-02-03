@@ -1,12 +1,14 @@
-# mac-code-sign
+# apple-code-sign
 
-Sample project to code-sign and publish an iOS and macOS app without a mac*
+Sample project to code-sign and publish an iOS and macOS app without a mac*.
 
 *\*(we'll use a mac BUT inside Github Action)*
 
 The two sample projects are simple "Hello World".
 
-By using [fastlane match](https://docs.fastlane.tools/actions/match/) and [Github Action](https://github.com/features/actions) we can compile and publish an iOS / macOS app without ever using a mac in person.
+**TL;DR**: By using [fastlane match](https://docs.fastlane.tools/actions/match/) and [Github Action](https://github.com/features/actions) we can compile and publish a code-signed iOS / macOS app without ever using a mac in person.
+
+*(Part two of my series on code-signing / distributing apps)*
 
 ## Create Github Repository
 

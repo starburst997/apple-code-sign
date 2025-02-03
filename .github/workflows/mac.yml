@@ -7,7 +7,7 @@ on:
 
 jobs:
   releaseToAppStore:
-    uses: starburst997/mac-code-sign/.github/workflows/mac.yml@v1
+    uses: starburst997/apple-code-sign/.github/workflows/mac.yml@v1
     secrets: inherit
     with:
       project_path: macOS

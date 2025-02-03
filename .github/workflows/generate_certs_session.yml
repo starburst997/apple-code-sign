@@ -9,5 +9,5 @@ on:
 
 jobs:
   generate_certs:
-    uses: starburst997/mac-code-sign/.github/workflows/generate_certs_session.yml@v1
+    uses: starburst997/apple-code-sign/.github/workflows/generate_certs_session.yml@v1
     secrets: inherit
