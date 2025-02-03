@@ -180,7 +180,7 @@ for_platform :mac do
 end
 ```
 
-#### fastlane/Fastfile ([ios](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/iOS/Fastfile) / [macOS](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/macOS/Fastfile))
+#### fastlane/Fastfile ([iOS](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/iOS/Fastfile) / [macOS](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/macOS/Fastfile))
 ```ruby
 import_from_git(
   url: "git@github.com:starburst997/apple-code-sign.git",
@@ -293,10 +293,12 @@ If you want to upload the artifact to use in your workflow (ex; upload to S3 aft
 
 ## Initialize fastlane match
 
-Go into the **Actions** tab of your project's github repository and run the action **"Apple One-Time Setup (Session Token)"**
+Go into the **Actions** tab of your project's github repository and run the action **Apple One-Time Setup (Session Token)**
 
-Notice that your match repository will now be populated with the certificates and profiles for your app.
+Notice that your match repository will now be populated with the certificates and profiles for your app, it will also save the deploy key as a secret inside your repo.
+
+In the future (in a year), you might want to run **Generate Apple Certs (API Key)** to renew any expired certificates. The **Generate Apple Certs (Session Token)** can be called again for the **Developer ID Application** (in 5 year).
 
 ## Build and Distribute App
 
-Now you can manually run the action **"Build iOS"** and **"Build Mac"** to build your app and have it uploaded to Testflight. If you're satisfied with your builds, you can then use those to publish on the AppStore inside App Store Connect.
+Now you can manually run the action **Build iOS** and **Build Mac** to build your app and have it uploaded to Testflight. If you're satisfied with your builds, you can then use those to publish on the AppStore inside App Store Connect.
