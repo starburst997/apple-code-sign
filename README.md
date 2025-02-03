@@ -72,7 +72,7 @@ Save these 2 secrets in the github repository for your project (both equals if y
 <table align="center"><tr><td>
 <a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/api_key_01.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/api_key_01.png" alt="New API Key" title="New API Key" /></a><p align="center">1</p>
 </td><td>
-<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/api_key_02.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/api_key_01.png" alt="New API Key form" title="New API Key form"/></a><p align="center">2</p>
+<a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/api_key_02.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/api_key_02.png" alt="New API Key form" title="New API Key form"/></a><p align="center">2</p>
 </td></tr></table>
 
 App Store Connect API Key is the recomended way to sign in using fastlane, however if you want to also sign macOS app for individual distribution on your website, you will need to use the standard username / password procedure, this is because it requires the **Account Holder** permission to do so which is not (yet) possible with API Key. We'll discuss that in the next steps.
