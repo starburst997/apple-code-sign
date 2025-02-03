@@ -6,11 +6,25 @@ on:
   workflow_dispatch:
 
 jobs:
+  initialize:
+    name: Set envs
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.output.outputs.version }}
+    steps:
+      - id: output
+        name: Get github workspace
+        run: |
+          echo "workspace=${{ github.workspace }}" >> $GITHUB_OUTPUT
+          echo "WORKSPACE=${{ github.workspace }}" >> $GITHUB_ENV
+      - run: echo "WORKSPACE is now $WORKSPACE"
+
   releaseToAppStore:
     uses: starburst997/mac-code-sign/.github/workflows/mac.yml@v1
+    needs: [initialize]
     secrets: inherit
     with:
-      project_path: macOS
+      project_path: ${{ format('{0}/macOS', needs.initialize.outputs.workspace) }}
       project_target: Test
       xcodeproj_path: Test.xcodeproj
       plist_path: Test/Test.plist
