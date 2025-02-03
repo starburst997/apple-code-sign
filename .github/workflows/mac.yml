@@ -71,15 +71,10 @@ jobs:
           
           PROJECT_TARGET: ${{ inputs.project_target }}
           XCODEPROJ_PATH: ${{ inputs.xcodeproj_path }}
-          PLIST_PATH: ${{ inputs.plist_path }}
+          PLIST_PATH: ${{ format('{0}/{1}/{2}', github.workspace, inputs.project_path, inputs.plist_path) }}
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: ${{ inputs.build_path }}
         run: |
-          pwd
-          ls -la .
-          ls -la macOS
-          ls -la macOS/Test.xcodeproj
-
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           bundle install
