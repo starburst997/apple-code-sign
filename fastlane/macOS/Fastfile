@@ -49,7 +49,7 @@ platform :mac do
       app_identifier: ENV["MAC_BUNDLE_ID"]
     )
     
-    if ENV['GENERATE_DEVELOPER_ID'] || ENV['GENERATE_DEVELOPER_ID'] == "true"
+    if ENV['GENERATE_DEVELOPER_ID']
       puts "Generating Developer ID"
       match(
         type: "developer_id",
@@ -79,7 +79,7 @@ platform :mac do
       app_identifier: ENV["MAC_BUNDLE_ID"]
     )
 
-    if ENV['GENERATE_DEVELOPER_ID'] || ENV['GENERATE_DEVELOPER_ID'] == "true"
+    if ENV['GENERATE_DEVELOPER_ID']
       puts "Generating Developer ID"
       match(
         type: "developer_id",

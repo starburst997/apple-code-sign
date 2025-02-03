@@ -1,9 +1,6 @@
 name: Build MacOS
 
 on: 
-  #push
-  #pull_request
-  workflow_dispatch:
   workflow_call:
     inputs:
       project_path:

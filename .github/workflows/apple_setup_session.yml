@@ -1,29 +1,6 @@
 name: Apple Setup (Session Token)
 
 on:
-  workflow_dispatch:
-    inputs:
-      generate_macos:
-        description: "Generate macOS"
-        type: choice
-        default: 'true'
-        options:
-          - true
-          - false
-      generate_ios:
-        description: "Generate iOS"
-        type: choice
-        default: 'true'
-        options:
-          - true
-          - false
-      generate_developer_id:
-        description: "Generate Developer ID"
-        type: choice
-        default: 'true'
-        options:
-          - true
-          - false
   workflow_call:
     inputs:
       generate_macos:
@@ -63,7 +40,7 @@ jobs:
   generate_certs_all:
     runs-on: macos-latest
     needs: [setup]
-    if: ${{ (inputs.generate_macos == true || inputs.generate_macos == 'true') && (inputs.generate_ios == true || inputs.generate_ios == 'true') }}
+    if: ${{ (inputs.generate_macos == true) && (inputs.generate_ios == true) }}
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -96,7 +73,7 @@ jobs:
   generate_certs_ios:
     runs-on: macos-latest
     needs: [setup]
-    if: ${{ (inputs.generate_macos == false || inputs.generate_macos == 'false') && (inputs.generate_ios == true || inputs.generate_ios == 'true') }}
+    if: ${{ (inputs.generate_macos == false) && (inputs.generate_ios == true) }}
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -127,7 +104,7 @@ jobs:
   generate_certs_macos:
     runs-on: macos-latest
     needs: [setup]
-    if: ${{ (inputs.generate_macos == true || inputs.generate_macos == 'true') && (inputs.generate_ios == false || inputs.generate_ios == 'false') }}
+    if: ${{ (inputs.generate_macos == true) && (inputs.generate_ios == false) }}
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
