@@ -64,7 +64,7 @@ jobs:
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
           APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
 
-          IOS_BUILD_PATH: ${{ format('{0}/${{ inputs.project_path }}', github.workspace) }}
+          IOS_BUILD_PATH: ${{ format("{0}/${{ inputs.project_path }}", github.workspace) }}
           IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
           
           ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: false

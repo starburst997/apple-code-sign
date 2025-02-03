@@ -66,7 +66,7 @@ jobs:
 
           ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: false
 
-          MAC_BUILD_PATH: ${{ format('{0}/${{ inputs.project_path }}', github.workspace) }}
+          MAC_BUILD_PATH: ${{ format("{0}/${{ inputs.project_path }}", github.workspace) }}
           MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
           
           PROJECT_TARGET: ${{ inputs.project_target }}
