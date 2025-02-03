@@ -223,11 +223,6 @@ platform :mac do
       scheme: 'Test',
       xcargs: '-allowProvisioningUpdates',
       skip_profile_detection: true
-      #export_options: {
-      #  provisioningProfiles: {
-      #    "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos_profile-name"]
-      #  }
-      #}
     )
   end
 end
