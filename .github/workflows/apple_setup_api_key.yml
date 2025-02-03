@@ -58,8 +58,8 @@ jobs:
       - name: Fastlane
         shell: bash
         run: |
-          eval "$(ssh-agent -s)"
           MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
+          eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           ((GENERATE_IOS)) && bundle exec fastlane ios sync_certificates_api_key
           ((GENERATE_MACOS)) && bundle exec fastlane mac sync_certificates_api_key
