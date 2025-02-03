@@ -21,11 +21,11 @@ jobs:
       - name: Increment IOS_BUILD_NUMBER locally
         id: versions
         env:
-          VERSION: ${{ vars.IOS_BUILD_NUMBER }}
+          BUILD_NUMBER: ${{ vars.IOS_BUILD_NUMBER }}
         run: |
-          echo "ios_build_number=$(($IOS_BUILD_NUMBER+1))" >> $GITHUB_OUTPUT
-          echo "IOS_BUILD_NUMBER=$(($IOS_BUILD_NUMBER+1))" >> $GITHUB_ENV
-      - run: echo "IOS_BUILD_NUMBER is now $IOS_BUILD_NUMBER"
+          echo "build_number=$(($BUILD_NUMBER+1))" >> $GITHUB_OUTPUT
+          echo "BUILD_NUMBER=$(($BUILD_NUMBER+1))" >> $GITHUB_ENV
+      - run: echo "BUILD_NUMBER is now $BUILD_NUMBER"
 
       - name: Increment Version
         uses: starburst997/increment@v2

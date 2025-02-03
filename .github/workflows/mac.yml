@@ -21,11 +21,11 @@ jobs:
       - name: Increment MAC_BUILD_NUMBER locally
         id: versions
         env:
-          VERSION: ${{ vars.MAC_BUILD_NUMBER }}
+          BUILD_NUMBER: ${{ vars.MAC_BUILD_NUMBER }}
         run: |
-          echo "mac_build_number=$(($MAC_BUILD_NUMBER+1))" >> $GITHUB_OUTPUT
-          echo "MAC_BUILD_NUMBER=$(($MAC_BUILD_NUMBER+1))" >> $GITHUB_ENV
-      - run: echo "MAC_BUILD_NUMBER is now $MAC_BUILD_NUMBER"
+          echo "build_number=$(($BUILD_NUMBER+1))" >> $GITHUB_OUTPUT
+          echo "BUILD_NUMBER=$(($BUILD_NUMBER+1))" >> $GITHUB_ENV
+      - run: echo "BUILD_NUMBER is now $BUILD_NUMBER"
 
       - name: Increment Version remotely
         uses: starburst997/increment@v2
