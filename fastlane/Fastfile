@@ -221,7 +221,12 @@ platform :mac do
       export_method: 'app-store', # 'developer-id',
       project: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
       scheme: 'Test',
-      xcargs: '-allowProvisioningUpdates'
+      xcargs: '-allowProvisioningUpdates',
+      export_options: {
+        provisioningProfiles: {
+          "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos_profile-name"]
+        }
+      }
     )
   end
 end
