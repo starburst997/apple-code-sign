@@ -40,6 +40,7 @@ jobs:
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+          bundle install
           bundle exec fastlane ios beta
 
       - uses: actions/upload-artifact@v4
