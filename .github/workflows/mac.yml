@@ -10,7 +10,7 @@ jobs:
     uses: starburst997/mac-code-sign/.github/workflows/mac.yml@v1
     secrets: inherit
     with:
-      project_path: ${{ format('{0}/macOS', github.workspace) }}
+      project_path: macOS
       project_target: Test
       xcodeproj_path: Test.xcodeproj
       plist_path: Test/Test.plist
