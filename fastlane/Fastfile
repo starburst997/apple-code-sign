@@ -213,7 +213,7 @@ platform :mac do
       code_sign_identity: 'Apple Distribution', # 'Developer ID Application'
       targets: 'Test',
       path: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
-      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstor_macos_profile-name"],
+      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos_profile-name"],
       profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos"]
     )
 
