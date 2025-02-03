@@ -18,6 +18,8 @@ on:
         type: string
       artifact:
         type: boolean
+      generate_developer_id:
+        type: boolean
 
 jobs:
   build:
@@ -72,6 +74,8 @@ jobs:
           PLIST_PATH: ${{ inputs.plist_path }}
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: build
+
+          GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
