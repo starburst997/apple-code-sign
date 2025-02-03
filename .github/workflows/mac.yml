@@ -75,6 +75,7 @@ jobs:
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: ${{ inputs.build_path }}
         run: |
+          ls -la .
           ls -la macOS
           ls -la macOS/Test.xcodeproj
 
