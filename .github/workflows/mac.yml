@@ -13,7 +13,7 @@ jobs:
       project_path: macOS
       project_target: Test
       xcodeproj_path: Test.xcodeproj
-      plist_path: Test/Test.plist
+      plist_path: Test/Info.plist
       version: "2025.1"
       build_path: build
       artifact: true
