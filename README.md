@@ -211,7 +211,7 @@ jobs:
 
 #### ios.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/ios.yml))
 ```yml
-name: Build iOS (TestFlight)
+name: Build iOS
 
 on: 
   workflow_dispatch:
@@ -231,7 +231,7 @@ jobs:
 
 #### mac.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/mac.yml))
 ```yml
-name: Build Mac (TestFlight)
+name: Build MacOS
 
 on: 
   workflow_dispatch:
