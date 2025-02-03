@@ -84,6 +84,7 @@ jobs:
           PLIST_PATH: ${{ inputs.plist_path }}
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: build
+        shell: bash
         run: |
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
