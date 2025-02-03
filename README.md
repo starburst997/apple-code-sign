@@ -10,9 +10,19 @@ The two sample projects are simple "Hello World".
 
 *(Part two of my series on code-signing / distributing apps)*
 
+<br/>
+
+## Enroll in the Apple Developer Program
+
+Before you jump in, you need to enroll in the [Apple Developer Program](https://developer.apple.com/programs/enroll/) which is about $99 per year.
+
+<br/>
+
 ## Create Github Repository
 
 Create a Github Repository for your project. Feel free to use this repository as a template since it already contains all the workflows files.
+
+<br/>
 
 ## Installing fastlane
 
@@ -44,6 +54,8 @@ bundle lock --add-platform arm64-darwin-23
 
 Adding the additional platforms ensure we can call `fastlane` from the Github Action running on `ubuntu-latest` or `macos-latest` (in the future, the mac platform id might change).
 
+<br/>
+
 ## Create app in App Store Connect
 
 <table align="center"><tr><td>
@@ -67,6 +79,8 @@ Save these 2 secrets in the github repository for your project (both equals if y
 - `IOS_BUNDLE_ID`: The iOS bundle ID
 - `MAC_BUNDLE_ID`: The macOS bundle ID
 
+<br/>
+
 ## Generate App Store Connect API Key
 
 <table align="center"><tr><td>
@@ -75,7 +89,9 @@ Save these 2 secrets in the github repository for your project (both equals if y
 <a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/api_key_02.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/api_key_02.png" alt="New API Key form" title="New API Key form"/></a><p align="center">2</p>
 </td></tr></table>
 
-App Store Connect API Key is the recomended way to sign in using fastlane, however if you want to also sign macOS app for individual distribution on your website, you will need to use the standard username / password procedure, this is because it requires the **Account Holder** permission to do so which is not (yet) possible with API Key. We'll discuss that in the next steps.
+App Store Connect API Key is the recomended way to sign in using fastlane.
+
+However if you want to also sign macOS app for individual distribution on your website, you will need to use the standard username / password procedure, this is because it requires the **Account Holder** permission to do so which is not (yet) possible with API Key. We'll discuss that in the next steps.
 
 1. Go to your [Users and Access](https://appstoreconnect.apple.com/access/integrations/api) page on [App Store Connect](https://appstoreconnect.apple.com/). Go to the **Integrations** tab and makes sure to select the section **App Store Connect API** on the left side panel and the **Team Keys** tab.
 <br/><br/>
@@ -94,6 +110,8 @@ Save these 3 secrets in the github repository for your project:
 - `APPSTORE_ISSUER_ID`: The **Issuer ID** from above
 - `APPSTORE_KEY_ID`: The **Key ID** from your generated API Key
 - `APPSTORE_P8`: The text content of the downloaded **P8 file**
+
+<br/>
 
 ## Generate Session token
 
@@ -119,6 +137,8 @@ Save these 3 secrets in the github repository for your project:
 - `FASTLANE_PASSWORD`: Your Apple ID password
 - `FASTLANE_SESSION`: The value of `fastlane spaceauth`
 
+<br/>
+
 ## Create the fastlane match repository
 
 The `fastlane match` command can save all of your Apple certificates / profiles inside a private git repository for convenience and use in a CI environment.
@@ -132,8 +152,9 @@ Save these 2 secrets in the github repository for your **project** (not the newl
 - `MATCH_REPOSITORY`: Your newly created private repo (ex: `starburst997/fastlane-match`)
 - `MATCH_PASSWORD`: A unique password of your choice (save it in your password manager for re-use in other projects)
 
-## Generate a Personal Access Token (PAT)
+<br/>
 
+## Generate a Personal Access Token (PAT)
 
 <table align="center"><tr><td>
 <a href="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/pat_01.png" target="_blank"><img src="https://jd.boiv.in/assets/posts/2025-02-02-code-signing-apple/small/pat_01.png" alt="Generate New Token (Classic)" title="Generate New Token (Classic)" /></a><p align="center">1</p>
@@ -145,7 +166,7 @@ We also need to generate a **Personal Access Token** for Github.
 
 1. Visit your [settings page](https://github.com/settings/tokens) and click on **Generate new token** and select **Generate new token (classic)**.
 
-2. We need all the **repo** scope enabled. Click **Generate token** and save the value.
+2. We need all the **repo** scope enabled. Set **no expiration**. Click **Generate token** and save the value.
 
 ### Save secrets
 
@@ -153,13 +174,17 @@ Save this secret in the github repository for your project:
 
 - `GH_PAT`: The value of your newly generated token
 
+<br/>
+
 ## Additionals secrets
 
 Also add these 3 secrets to your github repository:
 
 - `APPLE_DEVELOPER_EMAIL`: Your Apple ID
-- `APPLE_CONNECT_EMAIL`: Apple Connect email (if using a single shared developer this is the same as `APPLE_DEVELOPER_EMAIL`)
+- `APPLE_CONNECT_EMAIL`: Apple Connect email (same as above if using a single shared developer)
 - `APPLE_TEAM_ID`: Team Id from your [Apple Developer Account - Membership Details](https://developer.apple.com/account/#/membership/)
+
+<br/>
 
 ## Secrets reviews
 
@@ -181,6 +206,8 @@ Makes sure you have all of these 14 secrets in your github repository:
 - `APPLE_TEAM_ID`
 
 *(Save those variables inside a Password Manager for re-use in future projects, except for the bundle ids, they won't change)*
+
+<br/>
 
 ## Create Fastfiles
 
@@ -217,6 +244,8 @@ import_from_git(
   path: "fastlane/macOS/Fastfile"
 )
 ```
+
+<br/>
 
 ## Create workflows
 
@@ -306,6 +335,8 @@ Notice that we need to specify the project's path, target, plist and version.
 
 If you want to upload the artifact to use in your workflow (ex; upload to S3 afterward), set `artifact: true`. The artifact name for iOS is `build-ios` and for macOS is `build-mac`.
 
+<br/>
+
 ## Initialize fastlane match
 
 Go into the **Actions** tab of your project's github repository and run the action **Apple Setup (Session Token)** (or the **API Key** variant).
@@ -314,8 +345,12 @@ Notice that your match repository will now be populated with the certificates an
 
 In the future (in a year), you might want to run again to renew any expired certificates. The **Developer ID Application** will need to be renewed in ~5 year.
 
+<br/>
+
 ## Build and Distribute App
 
 Now you can manually run the action **Build iOS** and **Build Mac** to build your app and have it uploaded to Testflight. If you're satisfied with your builds, you can then use those to publish on the AppStore inside App Store Connect.
 
-The workflow will also automatically increment the build number and save it as a variables in the repository.
+The workflow will also automatically increment the build number and save it as a variable in the repository.
+
+<br/>
