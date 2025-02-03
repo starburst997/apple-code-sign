@@ -94,8 +94,8 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           bundle install
-          ((GENERATE_APPSTORE)) && bundle exec fastlane mac beta
-          ((GENERATE_DEVELOPER_ID)) && bundle exec fastlane mac beta
+          [[ $GENERATE_APPSTORE == true ]] && bundle exec fastlane mac beta
+          [[ $GENERATE_DEVELOPER_ID == true ]] && bundle exec fastlane mac developer_id
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact }}

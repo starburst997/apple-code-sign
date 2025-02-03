@@ -50,15 +50,12 @@ platform :mac do
     )
     
     if ENV['GENERATE_DEVELOPER_ID']
-      puts "Generating Developer ID"
       match(
         type: "developer_id",
         storage_mode: "git",
         git_url: "git@github.com:#{match_org}/#{match_repo}.git",
         app_identifier: ENV["MAC_BUNDLE_ID"]
       )
-    else
-      puts "Skipping Developer ID"
     end
   end
   
@@ -80,7 +77,6 @@ platform :mac do
     )
 
     if ENV['GENERATE_DEVELOPER_ID']
-      puts "Generating Developer ID"
       match(
         type: "developer_id",
         storage_mode: "git",
@@ -88,8 +84,6 @@ platform :mac do
         git_url: "git@github.com:#{match_org}/#{match_repo}.git",
         app_identifier: ENV["MAC_BUNDLE_ID"]
       )
-    else
-      puts "Skipping Developer ID"
     end
   end
 
@@ -173,13 +167,13 @@ platform :mac do
 
     update_code_signing_settings(
       use_automatic_signing: false,
-      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos_team-id"],
+      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_team-id"],
       code_sign_identity: 'Developer ID Application',
       targets: "#{ENV['PROJECT_TARGET']}",
       bundle_identifier: "#{ENV['MAC_BUNDLE_ID']}",
       path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
-      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos_profile-name"],
-      profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos"]
+      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"],
+      profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos"]
     )
 
     increment_version_number(
@@ -200,7 +194,7 @@ platform :mac do
       xcargs: '-allowProvisioningUpdates',
       export_options: {
         provisioningProfiles: {
-          "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos_profile-name"]
+          "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"]
         }
       }
     )
