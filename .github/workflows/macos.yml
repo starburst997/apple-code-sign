@@ -16,3 +16,4 @@ jobs:
       project_target: Test
       version: "2025.1"
       artifact: true
+      generate_developer_id: true
