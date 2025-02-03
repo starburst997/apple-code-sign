@@ -30,6 +30,10 @@ jobs:
           submodules: recursive
           token: ${{ secrets.GH_PAT }}
           lfs: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+          bundler-cache: true
 
       - name: Increment MAC_BUILD_NUMBER locally
         id: versions
