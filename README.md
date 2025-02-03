@@ -26,7 +26,7 @@ gem install bundler
 
 Now create a file called `Gemfile` in the root:
 
-```gemfile
+```ruby
 source "https://rubygems.org"
 gem "fastlane"
 gem 'fastlane-plugin-github_action', git: "https://github.com/starburst997/fastlane-plugin-github_action"
