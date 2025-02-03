@@ -50,7 +50,7 @@ platform :ios do
     # Missing Export Compliance can also be set through Deliverfile
     update_info_plist(
       xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Test.xcodeproj",
-      plist_path: '/Test/Info.plist',
+      plist_path: 'Test/Info.plist',
       block: proc do |plist|
         plist['ITSAppUsesNonExemptEncryption'] = false
       end
@@ -184,7 +184,7 @@ platform :mac do
     # Missing Export Compliance can also be set through Deliverfile
     update_info_plist(
       xcodeproj: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
-      plist_path: '/Test/Info.plist',
+      plist_path: 'Test/Info.plist',
       block: proc do |plist|
         plist['ITSAppUsesNonExemptEncryption'] = false
       end
