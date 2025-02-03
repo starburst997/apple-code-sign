@@ -61,8 +61,8 @@ jobs:
           eval "$(ssh-agent -s)"
           MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          ((GENERATE_IOS)) && bundle exec fastlane ios sync_certificates_api_key
-          ((GENERATE_MACOS)) && bundle exec fastlane mac sync_certificates_api_key
+          [[ $GENERATE_IOS == true ]] && bundle exec fastlane ios sync_certificates_api_key
+          [[ $GENERATE_MACOS == true ]] && bundle exec fastlane mac sync_certificates_api_key
         env:
           APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
