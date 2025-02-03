@@ -1,4 +1,4 @@
-name: Build iOS (TestFlight)
+name: Build iOS
 
 on: 
   #push
@@ -6,14 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  releaseToAppStore:
+  build:
     uses: starburst997/apple-code-sign/.github/workflows/ios.yml@v1
     secrets: inherit
     with:
       project_path: iOS
-      project_target: Test
       xcodeproj_path: Test.xcodeproj
       plist_path: Test/Info.plist
+      project_target: Test
       version: "2025.1"
-      build_path: build
       artifact: true

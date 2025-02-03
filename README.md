@@ -157,6 +157,102 @@ Makes sure you have all of these 14 secrets in your github repository:
 - `APPLE_CONNECT_EMAIL`
 - `APPLE_TEAM_ID`
 
+*(Save those variables inside a Password Manager for re-use in future projects, except for the bundle ids, they won't change)*
+
+## Create workflows
+
+By using `workflow_call` we can simplify the workflow file by referencing an external one, but feel free to copy the original instead to fit your pipeline better.
+
+#### apple_setup_session.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/apple_setup_session.yml))
+```yml
+name: Apple One-Time Setup (Session Token)
+
+on: workflow_dispatch
+
+jobs:
+  setup:
+    uses: starburst997/apple-code-sign/.github/workflows/apple_setup_session.yml@v1
+    secrets: inherit
+```
+
+#### generate_certs_session.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/generate_certs_session.yml))
+```yml
+name: Generate Apple Certs (Session Token)
+
+on:
+  workflow_run:
+    workflows: ['Apple One-Time Setup (Session Token)']
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  generate_certs:
+    uses: starburst997/apple-code-sign/.github/workflows/generate_certs_session.yml@v1
+    secrets: inherit
+```
+
+#### generate_certs_api_key.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/generate_certs_api_key.yml))
+```yml
+name: Generate Apple Certs (API Key)
+
+on:
+  workflow_run:
+    workflows: ['Apple One-Time Setup (API Key)']
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  generate_certs:
+    uses: starburst997/apple-code-sign/.github/workflows/generate_certs_api_key.yml@v1
+    secrets: inherit
+```
+
+#### ios.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/ios.yml))
+```yml
+name: Build iOS (TestFlight)
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: starburst997/apple-code-sign/.github/workflows/ios.yml@v1
+    secrets: inherit
+    with:
+      project_path: iOS
+      xcodeproj_path: Test.xcodeproj
+      plist_path: Test/Info.plist
+      project_target: Test
+      version: "2025.1"
+      artifact: true
+```
+
+#### mac.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/mac.yml))
+```yml
+name: Build Mac (TestFlight)
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: starburst997/apple-code-sign/.github/workflows/mac.yml@v1
+    secrets: inherit
+    with:
+      project_path: macOS
+      xcodeproj_path: Test.xcodeproj
+      plist_path: Test/Info.plist
+      project_target: Test
+      version: "2025.1"
+      artifact: true
+```
+
+Notice that we need to specify the project's path, target, plist and version.
+
+If you want to upload the artifact to use in your workflow (ex; upload to S3 afterward), set `artifact: true`. The artifact name for iOS is `build-ios` and for macOS is `build-mac`.
+
 ## Initialize fastlane match
 
 Go into the **Actions** tab of your project's github repository and run the action **Apple One-Time Setup (Session Token)**
@@ -165,4 +261,4 @@ Notice that your match repository will now be populated with the certificates an
 
 ## Build and Distribute App
 
-TODO !!!
+Now you can manually run the action **Build iOS** and **Build Mac** to build your app and have it uploaded to Testflight. If you're satisfied with your builds, you can then use those to publish on the AppStore inside App Store Connect.
