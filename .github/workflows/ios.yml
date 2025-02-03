@@ -4,10 +4,6 @@ on:
   #push
   #pull_request
   workflow_dispatch:
-    inputs:
-      notes:
-        type: string
-        description: Release Notes
 
 jobs:
   releaseToAppStore:
