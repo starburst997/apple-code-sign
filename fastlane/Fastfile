@@ -84,11 +84,13 @@ platform :ios do
     )
 
     increment_version_number(
-      version_number: "2025.1.#{ENV['IOS_BUILD_NUMBER']}"
+      version_number: "2025.1.#{ENV['IOS_BUILD_NUMBER']}",
+      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Test.xcodeproj"
     )
 
     increment_build_number(
-      build_number: "#{ENV['IOS_BUILD_NUMBER']}"
+      build_number: "#{ENV['IOS_BUILD_NUMBER']}",
+      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Test.xcodeproj"
     )
 
     build_app( #alias: gym
@@ -228,11 +230,13 @@ platform :mac do
     )
 
     increment_version_number(
-      version_number: "2025.1.#{ENV['MAC_BUILD_NUMBER']}"
+      version_number: "2025.1.#{ENV['MAC_BUILD_NUMBER']}",
+      xcodeproj: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj"
     )
 
     increment_build_number(
-      build_number: "#{ENV['MAC_BUILD_NUMBER']}"
+      build_number: "#{ENV['MAC_BUILD_NUMBER']}",
+      xcodeproj: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj"
     )
 
     build_mac_app( #alias: gym
