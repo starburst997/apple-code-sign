@@ -10,7 +10,7 @@ on:
         type: string
       xcodeproj_path:
         type: string
-      project_path:
+      project_target:
         type: string
       plist_path:
         type: string
