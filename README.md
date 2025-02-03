@@ -203,7 +203,7 @@ Save those inside the `.github/workflows` directory of your repository.
 
 #### apple_setup_session.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/apple_setup_session.yml))
 ```yml
-name: Apple One-Time Setup (Session Token)
+name: Apple Setup (Session Token)
 
 on: workflow_dispatch
 
@@ -211,41 +211,31 @@ jobs:
   setup:
     uses: starburst997/apple-code-sign/.github/workflows/apple_setup_session.yml@v1
     secrets: inherit
+    with:
+      generate_macos: true
+      generate_ios: true
+      generate_developer_id: true
 ```
 
-#### generate_certs_session.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/generate_certs_session.yml))
-```yml
-name: Generate Apple Certs (Session Token)
+Alternatively for the setup, if you don't need the **Developer ID** certificates, then use the **API Key** variant.
 
-on:
-  workflow_run:
-    workflows: ['Apple One-Time Setup (Session Token)']
-    types:
-      - completed
-  workflow_dispatch:
+#### apple_setup_api_key.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/apple_setup_api_key.yml))
+```yml
+name: Apple Setup (API Key)
+
+on: workflow_dispatch
 
 jobs:
-  generate_certs:
-    uses: starburst997/apple-code-sign/.github/workflows/generate_certs_session.yml@v1
+  setup:
+    uses: starburst997/apple-code-sign/.github/workflows/apple_setup_api_key.yml@v1
     secrets: inherit
+    with:
+      generate_macos: true
+      generate_ios: true
+      generate_developer_id: false
 ```
 
-#### generate_certs_api_key.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/generate_certs_api_key.yml))
-```yml
-name: Generate Apple Certs (API Key)
-
-on:
-  workflow_run:
-    workflows: ['Apple One-Time Setup (API Key)']
-    types:
-      - completed
-  workflow_dispatch:
-
-jobs:
-  generate_certs:
-    uses: starburst997/apple-code-sign/.github/workflows/generate_certs_api_key.yml@v1
-    secrets: inherit
-```
+Build workflows for **macOS** and **iOS**
 
 #### ios.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/ios.yml))
 ```yml
@@ -285,6 +275,7 @@ jobs:
       project_target: Test
       version: "2025.1"
       artifact: false
+      generate_developer_id: true
 ```
 
 Notice that we need to specify the project's path, target, plist and version.
@@ -293,11 +284,11 @@ If you want to upload the artifact to use in your workflow (ex; upload to S3 aft
 
 ## Initialize fastlane match
 
-Go into the **Actions** tab of your project's github repository and run the action **Apple One-Time Setup (Session Token)**
+Go into the **Actions** tab of your project's github repository and run the action **Apple Setup (Session Token)**
 
 Notice that your match repository will now be populated with the certificates and profiles for your app, it will also save the deploy key as a secret inside your repo.
 
-In the future (in a year), you might want to run **Generate Apple Certs (API Key)** to renew any expired certificates. The **Generate Apple Certs (Session Token)** can be called again for the **Developer ID Application** (in 5 year).
+In the future (in a year), you might want to run again to renew any expired certificates. The **Developer ID Application** will need to be renewed in ~5 year.
 
 ## Build and Distribute App
 
