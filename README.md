@@ -1,4 +1,4 @@
-# mac-code-sign-test
+# mac-code-sign
 
 Sample project to code-sign and publish an iOS and macOS app without a mac*
 
