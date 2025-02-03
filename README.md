@@ -274,7 +274,8 @@ jobs:
       plist_path: Test/Info.plist
       project_target: Test
       version: "2025.1"
-      artifact: false
+      artifact: true
+      generate_appstore: true
       generate_developer_id: true
 ```
 
@@ -293,3 +294,5 @@ In the future (in a year), you might want to run again to renew any expired cert
 ## Build and Distribute App
 
 Now you can manually run the action **Build iOS** and **Build Mac** to build your app and have it uploaded to Testflight. If you're satisfied with your builds, you can then use those to publish on the AppStore inside App Store Connect.
+
+The workflow will also automatically increment the build number and save it as a variables in the repository.
