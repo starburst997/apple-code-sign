@@ -48,13 +48,13 @@ platform :ios do
   desc "Deliver a new Beta build to Apple TestFlight"
   lane :beta do
     # Missing Export Compliance can also be set through Deliverfile
-    #update_info_plist(
-    #  xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Test.xcodeproj",
-    #  plist_path: 'Info.plist',
-    #  block: proc do |plist|
-    #    plist['ITSAppUsesNonExemptEncryption'] = false
-    #  end
-    #)
+    update_info_plist(
+      xcodeproj: "#{ENV['IOS_BUILD_PATH']}/Test.xcodeproj",
+      plist_path: "#{ENV['IOS_BUILD_PATH']}/Test/Info.plist",
+      block: proc do |plist|
+        plist['ITSAppUsesNonExemptEncryption'] = false
+      end
+    )
     
     build
     upload_to_testflight(skip_waiting_for_build_processing: false)
@@ -182,14 +182,14 @@ platform :mac do
   desc "Deliver a new Beta build to Apple TestFlight"
   lane :beta do
     # Missing Export Compliance can also be set through Deliverfile
-    #update_info_plist(
-    #  xcodeproj: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
-    #  plist_path: 'Info.plist',
-    #  block: proc do |plist|
-    #    plist['ITSAppUsesNonExemptEncryption'] = false
-    #  end
-    #)
-    
+    update_info_plist(
+      xcodeproj: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
+      plist_path: "#{ENV['MAC_BUILD_PATH']}/Test/Info.plist",
+      block: proc do |plist|
+        plist['ITSAppUsesNonExemptEncryption'] = false
+      end
+    )
+
     build
     upload_to_testflight(skip_waiting_for_build_processing: false)
   end
