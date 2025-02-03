@@ -235,7 +235,7 @@ jobs:
       generate_developer_id: false
 ```
 
-Build workflows for **iOS** and **macOS**
+Build workflows for **iOS** and **macOS**:
 
 #### ios.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/ios.yml))
 ```yml
