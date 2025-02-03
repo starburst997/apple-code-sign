@@ -1,2 +1,0 @@
-import("./Fastfile_iOS")
-import("./Fastfile_macOS")

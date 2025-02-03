@@ -1,2 +1,0 @@
-import("./Appfile_iOS")
-import("./Appfile_macOS")
