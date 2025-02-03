@@ -7,21 +7,12 @@ on:
 
 jobs:
   releaseToAppStore:
-    name: Release to Testflight
-    runs-on: macos-13
-    timeout-minutes: 30
-    steps:
-      - uses: starburst997/mac-code-sign/.github/workflows/mac.yml@v1
-        secrets: inherit
-        with:
-          project_path: macOS
-          project_target: Test
-          xcodeproj_path: Test.xcodeproj
-          plist_path: Test/Test.plist
-          version: "2025.1"
-          build_path: build
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build-pkg-appstore
-          path: build
+    uses: starburst997/mac-code-sign/.github/workflows/mac.yml@v1
+    secrets: inherit
+    with:
+      project_path: macOS
+      project_target: Test
+      xcodeproj_path: Test.xcodeproj
+      plist_path: Test/Test.plist
+      version: "2025.1"
+      build_path: build

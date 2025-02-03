@@ -4,7 +4,5 @@ on: workflow_dispatch
 
 jobs:
   setup:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: starburst997/mac-code-sign/.github/workflows/apple_setup_session.yml@v1
-        secrets: inherit
+    uses: starburst997/mac-code-sign/.github/workflows/apple_setup_session.yml@v1
+    secrets: inherit
