@@ -8,6 +8,8 @@ on:
     inputs:
       project_path:
         type: string
+      xcodeproj_path:
+        type: string
       project_target:
         type: string
       plist_path:
@@ -16,6 +18,8 @@ on:
         type: string
       build_path:
         type: string
+      artifact:
+        type: boolean
 
 jobs:
   releaseToAppStore:
@@ -77,6 +81,7 @@ jobs:
           bundle exec fastlane mac beta
 
       - uses: actions/upload-artifact@v4
+        if: ${{ inputs.artifact }}
         with:
-          name: build-app-store
+          name: build-mac
           path: build
