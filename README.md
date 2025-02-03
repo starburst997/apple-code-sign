@@ -159,9 +159,47 @@ Makes sure you have all of these 14 secrets in your github repository:
 
 *(Save those variables inside a Password Manager for re-use in future projects, except for the bundle ids, they won't change)*
 
+## Create Fastfiles
+
+By using `import_from_git` we can reference external *Fastfile* files, but feel free to copy the original instead to fit your pipeline better.
+
+#### fastlane/Appfile
+```ruby
+apple_dev_portal_id(ENV['APPLE_DEVELOPER_EMAIL'])
+itunes_connect_id(ENV['APPLE_CONNECT_EMAIL'])
+
+team_id(ENV['APPLE_TEAM_ID'])
+itc_team_id(ENV['APPLE_TEAM_ID'])
+
+for_platform :ios do
+  app_identifier(ENV['IOS_BUNDLE_ID'])
+end
+
+for_platform :mac do
+  app_identifier(ENV['MAC_BUNDLE_ID'])
+end
+```
+
+#### fastlane/Fastfile ([ios](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/iOS/Fastfile) / [macOS](https://github.com/starburst997/apple-code-sign/blob/v1/fastlane/macOS/Fastfile))
+```ruby
+import_from_git(
+  url: "git@github.com:starburst997/apple-code-sign.git",
+  branch: "v1",
+  path: "fastlane/iOS/Fastfile"
+)
+
+import_from_git(
+  url: "git@github.com:starburst997/apple-code-sign.git",
+  branch: "v1",
+  path: "fastlane/macOS/Fastfile"
+)
+```
+
 ## Create workflows
 
 By using `workflow_call` we can simplify the workflow file by referencing an external one, but feel free to copy the original instead to fit your pipeline better.
+
+Save those inside the `.github/workflows` directory of your repository.
 
 #### apple_setup_session.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/apple_setup_session.yml))
 ```yml
@@ -226,7 +264,7 @@ jobs:
       plist_path: Test/Info.plist
       project_target: Test
       version: "2025.1"
-      artifact: true
+      artifact: false
 ```
 
 #### mac.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/mac.yml))
@@ -246,7 +284,7 @@ jobs:
       plist_path: Test/Info.plist
       project_target: Test
       version: "2025.1"
-      artifact: true
+      artifact: false
 ```
 
 Notice that we need to specify the project's path, target, plist and version.
@@ -255,10 +293,10 @@ If you want to upload the artifact to use in your workflow (ex; upload to S3 aft
 
 ## Initialize fastlane match
 
-Go into the **Actions** tab of your project's github repository and run the action **Apple One-Time Setup (Session Token)**
+Go into the **Actions** tab of your project's github repository and run the action **"Apple One-Time Setup (Session Token)"**
 
 Notice that your match repository will now be populated with the certificates and profiles for your app.
 
 ## Build and Distribute App
 
-Now you can manually run the action **Build iOS** and **Build Mac** to build your app and have it uploaded to Testflight. If you're satisfied with your builds, you can then use those to publish on the AppStore inside App Store Connect.
+Now you can manually run the action **"Build iOS"** and **"Build Mac"** to build your app and have it uploaded to Testflight. If you're satisfied with your builds, you can then use those to publish on the AppStore inside App Store Connect.
