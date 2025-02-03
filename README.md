@@ -257,7 +257,7 @@ jobs:
       artifact: false
 ```
 
-#### mac.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/mac.yml))
+#### macos.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/macos.yml))
 ```yml
 name: Build MacOS
 
@@ -266,7 +266,7 @@ on:
 
 jobs:
   build:
-    uses: starburst997/apple-code-sign/.github/workflows/mac.yml@v1
+    uses: starburst997/apple-code-sign/.github/workflows/macos.yml@v1
     secrets: inherit
     with:
       project_path: macOS

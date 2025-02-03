@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    uses: starburst997/apple-code-sign/.github/workflows/mac.yml@v1
+    uses: starburst997/apple-code-sign/.github/workflows/macos.yml@v1
     secrets: inherit
     with:
       project_path: macOS

@@ -1,0 +1,12 @@
+name: Apple Setup (API Key)
+
+on: workflow_dispatch
+
+jobs:
+  setup:
+    uses: starburst997/apple-code-sign/.github/workflows/apple_setup_api_key.yml@v1
+    secrets: inherit
+    with:
+      generate_macos: true
+      generate_ios: true
+      generate_developer_id: false
