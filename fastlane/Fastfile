@@ -209,7 +209,7 @@ platform :mac do
 
     update_code_signing_settings(
       use_automatic_signing: false,
-      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_team-id"],
+      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos_team-id"],
       code_sign_identity: 'Apple Distribution', # 'Developer ID Application'
       targets: 'Test',
       path: "#{ENV['MAC_BUILD_PATH']}/Test.xcodeproj",
