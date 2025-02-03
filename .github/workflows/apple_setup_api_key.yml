@@ -63,6 +63,7 @@ jobs:
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           [[ $GENERATE_IOS == true ]] && bundle exec fastlane ios sync_certificates_api_key
           [[ $GENERATE_MACOS == true ]] && bundle exec fastlane mac sync_certificates_api_key
+          echo "Finshed!"
         env:
           APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}

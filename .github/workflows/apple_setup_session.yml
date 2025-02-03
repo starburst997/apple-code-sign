@@ -60,6 +60,7 @@ jobs:
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           [[ $GENERATE_IOS == true ]] && bundle exec fastlane ios sync_certificates_session
           [[ $GENERATE_MACOS == true ]] && bundle exec fastlane mac sync_certificates_session
+          echo "Finshed!"
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}

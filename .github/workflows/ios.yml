@@ -90,6 +90,7 @@ jobs:
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           bundle install
           bundle exec fastlane ios beta
+          echo "Finshed!"
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact }}
