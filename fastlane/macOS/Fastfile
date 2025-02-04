@@ -43,7 +43,14 @@ platform :mac do
         app_identifier: ENV["MAC_BUNDLE_ID"]
       )
 
+      puts "GENERATE PKG ? " + ENV['GENERATE_PKG'] + " !"
+
+      if ENV['GENERATE_PKG'] == 'false'
+        puts "???"
+      end
+
       if ENV['GENERATE_PKG']
+        puts "GENERATE PKG"
         match(
           type: "developer_id",
           additional_cert_types: "developer_id_installer",
