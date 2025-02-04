@@ -78,11 +78,13 @@ platform :mac do
   end
 
   desc "Create .app / .pkg (AppStore)"
-  lane :build_appstore do
+  lane :build_setup do
     setup_ci
-
     sync_certificates
+  end
 
+  desc "Create .app / .pkg (AppStore)"
+  lane :build_appstore do
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
     update_code_signing_settings(
@@ -128,10 +130,6 @@ platform :mac do
 
   desc "Create .app (Developer ID)"
   lane :build_developer_id do
-    setup_ci
-
-    sync_certificates
-
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
     update_code_signing_settings(
@@ -183,10 +181,6 @@ platform :mac do
 
   desc "Create .pkg (Developer ID Installer)"
   lane :build_pkg do
-    setup_ci
-
-    sync_certificates
-
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
     update_code_signing_settings(
@@ -216,7 +210,7 @@ platform :mac do
     )
 
     build_mac_app( #alias: gym
-      export_method: 'developer-id-installer',
+      export_method: 'package',
       project: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
       output_directory: "#{ENV['BUILD_PATH']}",
       output_name: "developer-id-installer",
