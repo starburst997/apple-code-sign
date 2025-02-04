@@ -30,7 +30,7 @@ We need to install [fastlane](https://fastlane.tools/) locally on our machine, f
 
 Also you need to makes sure [Bundler](https://bundler.io/) is installed:
 
-```sh
+```console
 gem install bundler
 ```
 
@@ -46,7 +46,7 @@ Notice that we're using my fork of [joshdholtz/fastlane-plugin-github_action](ht
 
 Now run:
 
-```sh
+```console
 bundle install
 bundle lock --add-platform x86_64-linux
 bundle lock --add-platform arm64-darwin-23
@@ -125,7 +125,7 @@ Takes note of both your Apple ID **username** and **password**.
 
 Generate a **Session Token** using [fastlane spaceauth](https://docs.fastlane.tools/getting-started/ios/authentication/):
 
-```sh
+```console
 fastlane spaceauth -u YOUR_USERNAME
 ```
 
