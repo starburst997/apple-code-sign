@@ -38,7 +38,6 @@ platform :mac do
       match(
         type: "developer_id",
         storage_mode: "git",
-        readonly: true,
         git_url: "git@github.com:#{match_org}/#{match_repo}.git",
         app_identifier: ENV["MAC_BUNDLE_ID"]
       )
@@ -66,7 +65,7 @@ platform :mac do
         plist['ITSAppUsesNonExemptEncryption'] = false
       end
     )
-    
+
     build_appstore
     upload_to_app_store
   end
