@@ -124,8 +124,6 @@ jobs:
       - name: Create DMG
         if: ${{ inputs.generate_developer_id && inputs.generate_dmg }}
         env:
-          MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
-
           APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
           APPLE_DEVELOPER_EMAIL: ${{ secrets.APPLE_DEVELOPER_EMAIL }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
@@ -138,6 +136,15 @@ jobs:
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
           APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
           USE_SESSION: ${{ inputs.use_session }}
+
+          MAC_BUILD_PATH: ${{ format('{0}/{1}', github.workspace, inputs.project_path) }}
+          MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
+
+          PROJECT_TARGET: ${{ inputs.project_target }}
+          XCODEPROJ_PATH: ${{ inputs.xcodeproj_path }}
+          PLIST_PATH: ${{ inputs.plist_path }}
+          VERSION: "${{ inputs.version }}"
+          BUILD_PATH: build
 
           GENERATE_APPSTORE: ${{ inputs.generate_appstore }}
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
