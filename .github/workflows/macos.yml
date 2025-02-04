@@ -150,7 +150,11 @@ jobs:
           create-dmg build/developer-id.app build
           find build -name '*.dmg' -exec mv '{}' build/developer-id.dmg \;
           ls -la build
+          eval "$(ssh-agent -s)"
+          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           bundle exec fastlane mac notarize_dmg
+          rm -Rf ${{ inputs.project_target }}.app
+          rm -Rf developer-id.app
         #  fastlane run notarize package:"build/developer-id.dmg" bundle_id:"$MAC_BUNDLE_ID" username:$APPLE_CONNECT_EMAIL print_log:true
         #  xcrun notarytool submit "build/developer-id.dmg" --keychain-profile "${NOTARIZE}" --wait
         #  xcrun stapler staple "build/developer-id.dmg"
