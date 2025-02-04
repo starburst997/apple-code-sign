@@ -1,0 +1,14 @@
+name: Apple Setup
+
+on: workflow_dispatch
+
+jobs:
+  setup:
+    uses: starburst997/apple-code-sign/.github/workflows/apple_setup.yml@v1
+    secrets: inherit
+    with:
+      generate_macos: true
+      generate_ios: true
+      generate_developer_id: true
+      generate_pkg: true
+      use_session: true

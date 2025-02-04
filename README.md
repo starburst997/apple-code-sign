@@ -253,41 +253,23 @@ By using `workflow_call` we can simplify the workflow file by referencing an ext
 
 Save those inside the `.github/workflows` directory of your repository.
 
-#### apple_setup_session.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/apple_setup_session.yml))
+#### apple_setup.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/apple_setup.yml))
 ```yml
-name: Apple Setup (Session Token)
+name: Apple Setup
 
 on: workflow_dispatch
 
 jobs:
   setup:
-    uses: starburst997/apple-code-sign/.github/workflows/apple_setup_session.yml@v1
+    uses: starburst997/apple-code-sign/.github/workflows/apple_setup.yml@v1
     secrets: inherit
     with:
       generate_macos: true
       generate_ios: true
       generate_developer_id: true
+      generate_pkg: true
+      use_session: true
 ```
-
-Alternatively for the setup, if you don't need the **Developer ID** certificates, then use the **API Key** variant.
-
-#### apple_setup_api_key.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/apple_setup_api_key.yml))
-```yml
-name: Apple Setup (API Key)
-
-on: workflow_dispatch
-
-jobs:
-  setup:
-    uses: starburst997/apple-code-sign/.github/workflows/apple_setup_api_key.yml@v1
-    secrets: inherit
-    with:
-      generate_macos: true
-      generate_ios: true
-      generate_developer_id: false
-```
-
-Build workflows for **iOS** and **macOS**:
 
 #### ios.yml ([original](https://github.com/starburst997/apple-code-sign/blob/v1/.github/workflows/ios.yml))
 ```yml
@@ -329,17 +311,18 @@ jobs:
       artifact: true
       generate_appstore: true
       generate_developer_id: true
+      generate_pkg: true
 ```
 
 Notice that we need to specify the project's path, target, plist and version.
 
-If you want to upload the artifact to use in your workflow (ex; upload to S3 afterward), set `artifact: true`. The artifact name for iOS is `build-ios` and for macOS is `build-mac`.
+If you want to upload the artifact to use in your workflow (ex; upload to S3 afterward), set `artifact: true`. The artifact name for iOS is `build-ios` and for macOS is `build-macos`.
 
 <br/>
 
 ## Initialize fastlane match
 
-Go into the **Actions** tab of your project's github repository and run the action **Apple Setup (Session Token)** (or the **API Key** variant).
+Go into the **Actions** tab of your project's github repository and run the action **Apple Setup** (or the **API Key** variant).
 
 Notice that your match repository will now be populated with the certificates and profiles for your app, it will also save the deploy key as a secret inside your repo.
 
