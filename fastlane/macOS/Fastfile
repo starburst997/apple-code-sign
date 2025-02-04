@@ -15,7 +15,7 @@ platform :mac do
 
   desc "Sync codesigning certificates"
   lane :sync_certificates do
-    if not ENV['USE_SESSION'] 
+    if ENV['USE_SESSION'] == 'false'
       app_store_connect_api_key(
         key_id: ENV["APPSTORE_KEY_ID"],
         issuer_id: ENV["APPSTORE_ISSUER_ID"],
@@ -24,7 +24,7 @@ platform :mac do
       )
     end
 
-    if ENV['GENERATE_APPSTORE']
+    if ENV['GENERATE_APPSTORE'] == 'true'
       match(
         type: "appstore",
         additional_cert_types: "mac_installer_distribution",
@@ -34,7 +34,7 @@ platform :mac do
       )
     end
 
-    if ENV['GENERATE_DEVELOPER_ID']
+    if ENV['GENERATE_DEVELOPER_ID'] == 'true'
       match(
         type: "developer_id",
         storage_mode: "git",
@@ -43,13 +43,7 @@ platform :mac do
         app_identifier: ENV["MAC_BUNDLE_ID"]
       )
 
-      puts "GENERATE PKG ? " + ENV['GENERATE_PKG'] + " !"
-
-      if ENV['GENERATE_PKG'] == 'false'
-        puts "???"
-      end
-
-      if ENV['GENERATE_PKG']
+      if ENV['GENERATE_PKG'] == 'true'
         puts "GENERATE PKG"
         match(
           type: "developer_id",

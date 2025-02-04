@@ -15,7 +15,7 @@ platform :ios do
 
   desc "Sync codesigning certificates"
   lane :sync_certificates do
-    if not ENV['USE_SESSION'] 
+    if ENV['USE_SESSION'] == 'false' 
       app_store_connect_api_key(
         key_id: ENV["APPSTORE_KEY_ID"],
         issuer_id: ENV["APPSTORE_ISSUER_ID"],
