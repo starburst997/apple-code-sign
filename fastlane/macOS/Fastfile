@@ -196,13 +196,13 @@ platform :mac do
 
     update_code_signing_settings(
       use_automatic_signing: false,
-      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos_team-id"],
+      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_team-id"],
       code_sign_identity: 'Developer ID Installer',
       targets: "#{ENV['PROJECT_TARGET']}",
       bundle_identifier: "#{ENV['MAC_BUNDLE_ID']}",
       path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
-      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos_profile-name"],
-      profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos"]
+      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"],
+      profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos"]
     )
 
     increment_version_number(
@@ -224,7 +224,7 @@ platform :mac do
       xcargs: '-allowProvisioningUpdates',
       export_options: {
         provisioningProfiles: {
-          "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos_profile-name"]
+          "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"]
         }
       }
     )
