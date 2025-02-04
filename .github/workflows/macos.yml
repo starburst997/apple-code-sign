@@ -119,7 +119,9 @@ jobs:
         working-directory: build
         run: |
           rm -Rf developer-id.app.zip
-          zip -qq -r developer-id.app.zip developer-id.app
+          rm -Rf build/${{ inputs.project_target }}.app
+          mv developer-id.app ${{ inputs.project_target }}.app
+          zip -qq -r developer-id.app.zip ${{ inputs.project_target }}.app
 
       - name: Create DMG
         if: ${{ inputs.generate_developer_id && inputs.generate_dmg }}
@@ -154,7 +156,7 @@ jobs:
         run: |
           npm install --global starburst997/create-dmg
           brew install graphicsmagick imagemagick
-          create-dmg build/developer-id.app build
+          create-dmg build/${{ inputs.project_target }}.app build
           find build -name '*.dmg' -exec mv '{}' build/developer-id.dmg \;
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
@@ -165,7 +167,6 @@ jobs:
 
       - name: Cleanup
         run: |
-          rm -Rf build/${{ inputs.project_target }}.app
           rm -Rf build/developer-id.app
           ls -la build
 
