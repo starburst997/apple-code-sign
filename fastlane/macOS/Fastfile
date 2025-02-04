@@ -78,13 +78,11 @@ platform :mac do
   end
 
   desc "Create .app / .pkg (AppStore)"
-  lane :build_setup do
-    setup_ci
-    sync_certificates
-  end
-
-  desc "Create .app / .pkg (AppStore)"
   lane :build_appstore do
+    setup_ci
+
+    sync_certificates
+
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
     update_code_signing_settings(
@@ -130,6 +128,10 @@ platform :mac do
 
   desc "Create .app (Developer ID)"
   lane :build_developer_id do
+    setup_ci
+
+    sync_certificates
+
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
     update_code_signing_settings(
@@ -181,6 +183,10 @@ platform :mac do
 
   desc "Create .pkg (Developer ID Installer)"
   lane :build_pkg do
+    setup_ci
+
+    sync_certificates
+
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
     update_code_signing_settings(

@@ -105,7 +105,6 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
           bundle install
-          bundle exec fastlane mac build_setup
           [[ $GENERATE_APPSTORE == true ]] && bundle exec fastlane mac beta
           [[ $GENERATE_DEVELOPER_ID == true ]] && bundle exec fastlane mac developer_id
           [[ $GENERATE_PKG == true ]] && bundle exec fastlane mac pkg
