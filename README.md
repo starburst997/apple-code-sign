@@ -336,4 +336,8 @@ Now you can manually run the action **Build iOS** and **Build Mac** to build you
 
 The workflow will also automatically increment the build number and save it as a variable in the repository.
 
+I've also included a [release workflow](https://github.com/starburst997/apple-code-sign/blob/main/.github/workflows/release.yml) as an example.
+
+The macOS builds also includes an optional **.dmg** and **.app.zip** both are notarized and stapled.
+
 <br/>
