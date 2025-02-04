@@ -174,13 +174,14 @@ platform :mac do
       }
     )
 
-    #notarize(
-    #  package: "#{ENV['BUILD_PATH']}/developer-id.app",
-    #  bundle_id: "#{ENV['MAC_BUNDLE_ID']}",
-    #  username: "#{ENV['APPLE_CONNECT_EMAIL']}"
-    #)
+    notarize(
+      package: "#{ENV['BUILD_PATH']}/developer-id.app",
+      bundle_id: "#{ENV['MAC_BUNDLE_ID']}",
+      username: "#{ENV['APPLE_CONNECT_EMAIL']}"
+    )
   end
 
+  # TODO: Not working, having issue with the provisioning profile
   desc "Create .pkg (Developer ID Installer)"
   lane :build_pkg do
     setup_ci
@@ -228,7 +229,5 @@ platform :mac do
         }
       }
     )
-
-    #notarize()
   end
 end
