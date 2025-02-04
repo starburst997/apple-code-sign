@@ -124,7 +124,6 @@ jobs:
       - name: Create DMG
         if: ${{ inputs.generate_developer_id && inputs.generate_dmg }}
         env:
-          APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
           MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
 
           APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
@@ -134,6 +133,16 @@ jobs:
           MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
           MATCH_DEPLOY_KEY: ${{ secrets.MATCH_DEPLOY_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
+          USE_SESSION: ${{ inputs.use_session }}
+
+          GENERATE_APPSTORE: ${{ inputs.generate_appstore }}
+          GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
+          GENERATE_PKG: ${{ inputs.generate_pkg }}
+          GENERATE_DMG: ${{ inputs.generate_dmg }}
         shell: bash
         run: |
           echo "Test: $MAC_BUNDLE_ID"
