@@ -27,6 +27,12 @@ on:
       generate_developer_id:
         required: false
         type: boolean
+      generate_dmg:
+        required: false
+        type: boolean
+      generate_pkg:
+        required: false
+        type: boolean
       macos_vm:
         description: 'The macos machine to runs-on'
         default: 'macos-13' # Ventura w/ xCode 15.0.1
@@ -93,6 +99,7 @@ jobs:
 
           GENERATE_APPSTORE: ${{ inputs.generate_appstore }}
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
+          GENERATE_PKG: ${{ inputs.generate_pkg }}
         shell: bash
         run: |
           eval "$(ssh-agent -s)"
@@ -100,7 +107,14 @@ jobs:
           bundle install
           [[ $GENERATE_APPSTORE == true ]] && bundle exec fastlane mac beta
           [[ $GENERATE_DEVELOPER_ID == true ]] && bundle exec fastlane mac developer_id
+          [[ $GENERATE_PKG == true ]] && bundle exec fastlane mac pkg
           echo "Finshed!"
+
+      - name: Create DMG
+        if: ${{ inputs.generate_developer_id && input.generate_dmg }}
+        shell: bash
+        run: |
+          echo LOL
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact }}

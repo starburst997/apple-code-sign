@@ -1,13 +1,22 @@
-name: Apple Setup (Session Token)
+name: Apple Setup
 
 on:
   workflow_call:
     inputs:
+      use_session:
+        required: false
+        type: boolean
       generate_macos:
+        required: false
         type: boolean
       generate_ios:
+        required: false
         type: boolean
       generate_developer_id:
+        required: false
+        type: boolean
+      generate_pkg:
+        required: false
         type: boolean
       macos_vm:
         description: 'The macos machine to runs-on'
@@ -34,15 +43,11 @@ jobs:
           bundle exec fastlane ios init_ci
           echo "match_deploy_key=$(cat MATCH_DEPLOY_KEY | base64 --wrap=0)" >> $GITHUB_OUTPUT
         env:
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
-
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
           MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
 
-  generate_certs_all:
+  generate_certs:
     runs-on: ${{ inputs.macos_vm }}
     needs: [setup]
     steps:
@@ -58,13 +63,16 @@ jobs:
           eval "$(ssh-agent -s)"
           MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
           ssh-add - <<< "${MATCH_DEPLOY_KEY}"
-          [[ $GENERATE_IOS == true ]] && bundle exec fastlane ios sync_certificates_session
-          [[ $GENERATE_MACOS == true ]] && bundle exec fastlane mac sync_certificates_session
+          [[ $GENERATE_IOS == true ]] && bundle exec fastlane ios sync_certificates
+          [[ $GENERATE_MACOS == true ]] && bundle exec fastlane mac sync_certificates
           echo "Finshed!"
         env:
           FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
           FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
 
           MAC_BUNDLE_ID: ${{ secrets.MAC_BUNDLE_ID }}
           IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
@@ -76,3 +84,5 @@ jobs:
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
           GENERATE_IOS: ${{ inputs.generate_ios }}
           GENERATE_MACOS: ${{ inputs.generate_macos }}
+          GENERATE_PKG: ${{ inputs.generate_pkg }}
+          USE_SESSION: ${{ inputs.use_session }}

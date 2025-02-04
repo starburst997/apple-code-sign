@@ -13,24 +13,16 @@ platform :ios do
     )
   end
 
-  desc "Sync codesigning certificates (API Key)"
-  lane :sync_certificates_api_key do
-    app_store_connect_api_key(
-      key_id: ENV["APPSTORE_KEY_ID"],
-      issuer_id: ENV["APPSTORE_ISSUER_ID"],
-      key_content: ENV['APPSTORE_P8']
-    )
+  desc "Sync codesigning certificates"
+  lane :sync_certificates do
+    if not ENV['USE_SESSION'] 
+      app_store_connect_api_key(
+        key_id: ENV["APPSTORE_KEY_ID"],
+        issuer_id: ENV["APPSTORE_ISSUER_ID"],
+        key_content: ENV['APPSTORE_P8']
+      )
+    end
 
-    match(
-      type: "appstore",
-      storage_mode: "git",
-      git_url: "git@github.com:#{match_org}/#{match_repo}.git",
-      app_identifier: ENV["IOS_BUNDLE_ID"]
-    )
-  end
-
-  desc "Sync codesigning certificates (Session Token)"
-  lane :sync_certificates_session do
     match(
       type: "appstore",
       storage_mode: "git",
@@ -64,7 +56,7 @@ platform :ios do
   lane :build do
     setup_ci
 
-    sync_certificates_api_key
+    sync_certificates
 
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
@@ -96,6 +88,7 @@ platform :ios do
     build_app( #alias: gym
       project: "#{ENV['IOS_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
       output_directory: "#{ENV['BUILD_PATH']}",
+      output_name: "appstore.ipa",
       scheme: "#{ENV['PROJECT_TARGET']}",
       xcargs: '-allowProvisioningUpdates'
     )

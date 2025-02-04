@@ -13,60 +13,16 @@ platform :mac do
     )
   end
 
-  desc "Sync codesigning certificates (API Key)"
-  lane :sync_certificates_api_key do
-    app_store_connect_api_key(
-      key_id: ENV["APPSTORE_KEY_ID"],
-      issuer_id: ENV["APPSTORE_ISSUER_ID"],
-      key_content: ENV['APPSTORE_P8'],
-      in_house: false
-    )
-
-    match(
-      type: "appstore",
-      additional_cert_types: "mac_installer_distribution",
-      storage_mode: "git",
-      git_url: "git@github.com:#{match_org}/#{match_repo}.git",
-      app_identifier: ENV["MAC_BUNDLE_ID"]
-    )
-
-    # Won't work with API Key
-    #match(
-    #  type: "developer_id",
-    #  storage_mode: "git",
-    #  git_url: "git@github.com:#{match_org}/#{match_repo}.git",
-    #  app_identifier: ENV["MAC_BUNDLE_ID"]
-    #)
-  end
-
-  desc "Sync codesigning certificates (Session Token)"
-  lane :sync_certificates_session do
-    match(
-      type: "appstore",
-      additional_cert_types: "mac_installer_distribution",
-      storage_mode: "git",
-      git_url: "git@github.com:#{match_org}/#{match_repo}.git",
-      app_identifier: ENV["MAC_BUNDLE_ID"]
-    )
-    
-    if ENV['GENERATE_DEVELOPER_ID']
-      match(
-        type: "developer_id",
-        storage_mode: "git",
-        git_url: "git@github.com:#{match_org}/#{match_repo}.git",
-        app_identifier: ENV["MAC_BUNDLE_ID"]
+  desc "Sync codesigning certificates"
+  lane :sync_certificates do
+    if not ENV['USE_SESSION'] 
+      app_store_connect_api_key(
+        key_id: ENV["APPSTORE_KEY_ID"],
+        issuer_id: ENV["APPSTORE_ISSUER_ID"],
+        key_content: ENV['APPSTORE_P8'],
+        in_house: false
       )
     end
-  end
-  
-  desc "Sync codesigning certificates (API Key / All)"
-  lane :sync_certificates_api_key_all do
-    app_store_connect_api_key(
-      key_id: ENV["APPSTORE_KEY_ID"],
-      issuer_id: ENV["APPSTORE_ISSUER_ID"],
-      key_content: ENV['APPSTORE_P8'],
-      in_house: false
-    )
 
     match(
       type: "appstore",
@@ -84,6 +40,16 @@ platform :mac do
         git_url: "git@github.com:#{match_org}/#{match_repo}.git",
         app_identifier: ENV["MAC_BUNDLE_ID"]
       )
+
+      if ENV['GENERATE_PKG']
+        match(
+          type: "developer_id_installer",
+          additional_cert_types: "developer_id_installer",
+          storage_mode: "git",
+          git_url: "git@github.com:#{match_org}/#{match_repo}.git",
+          app_identifier: ENV["MAC_BUNDLE_ID"]
+        )
+      end
     end
   end
 
@@ -99,16 +65,21 @@ platform :mac do
     upload_to_testflight(skip_waiting_for_build_processing: false)
   end
 
-  desc "Deliver a new build using Developer ID"
+  desc "Create a new build using Developer ID"
   lane :developer_id do
     build_developer_id
+  end
+  
+  desc "Create a new build using PKG"
+  lane :pkg do
+    build_pkg
   end
 
   desc "Create .app / .pkg (AppStore)"
   lane :build_appstore do
     setup_ci
 
-    sync_certificates_api_key_all
+    sync_certificates
 
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
@@ -129,7 +100,7 @@ platform :mac do
     )
 
     increment_version_number(
-      version_number: "2025.1.#{ENV['BUILD_NUMBER']}",
+      version_number: "#{ENV['VERSION']}.#{ENV['BUILD_NUMBER']}",
       xcodeproj: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}"
     )
 
@@ -142,6 +113,7 @@ platform :mac do
       export_method: 'app-store',
       project: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
       output_directory: "#{ENV['BUILD_PATH']}",
+      output_name: "appstore",
       scheme: "#{ENV['PROJECT_TARGET']}",
       xcargs: '-allowProvisioningUpdates',
       export_options: {
@@ -156,7 +128,7 @@ platform :mac do
   lane :build_developer_id do
     setup_ci
 
-    sync_certificates_api_key_all
+    sync_certificates
 
     # Unity has specific requirements around codesigning that we have to handle
     # See https://github.com/fastlane/fastlane/discussions/17458 for context
@@ -177,7 +149,7 @@ platform :mac do
     )
 
     increment_version_number(
-      version_number: "2025.1.#{ENV['BUILD_NUMBER']}",
+      version_number: "#{ENV['VERSION']}.#{ENV['BUILD_NUMBER']}",
       xcodeproj: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}"
     )
 
@@ -190,11 +162,61 @@ platform :mac do
       export_method: 'developer-id',
       project: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
       output_directory: "#{ENV['BUILD_PATH']}",
+      output_name: "developer-id",
       scheme: "#{ENV['PROJECT_TARGET']}",
       xcargs: '-allowProvisioningUpdates',
       export_options: {
         provisioningProfiles: {
           "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"]
+        }
+      }
+    )
+  end
+
+  desc "Create .pkg (Developer ID Installer)"
+  lane :build_pkg do
+    setup_ci
+
+    sync_certificates
+
+    # Unity has specific requirements around codesigning that we have to handle
+    # See https://github.com/fastlane/fastlane/discussions/17458 for context
+    update_code_signing_settings(
+      use_automatic_signing: true,
+      path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}"
+    )
+
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos_team-id"],
+      code_sign_identity: 'Developer ID Application',
+      targets: "#{ENV['PROJECT_TARGET']}",
+      bundle_identifier: "#{ENV['MAC_BUNDLE_ID']}",
+      path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos_profile-name"],
+      profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos"]
+    )
+
+    increment_version_number(
+      version_number: "#{ENV['VERSION']}.#{ENV['BUILD_NUMBER']}",
+      xcodeproj: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}"
+    )
+
+    increment_build_number(
+      build_number: "#{ENV['BUILD_NUMBER']}",
+      xcodeproj: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}"
+    )
+
+    build_mac_app( #alias: gym
+      export_method: 'developer-id-installer',
+      project: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+      output_directory: "#{ENV['BUILD_PATH']}",
+      output_name: "developer-id-installer",
+      scheme: "#{ENV['PROJECT_TARGET']}",
+      xcargs: '-allowProvisioningUpdates',
+      export_options: {
+        provisioningProfiles: {
+          "#{ENV['MAC_BUNDLE_ID']}" => ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos_profile-name"]
         }
       }
     )
