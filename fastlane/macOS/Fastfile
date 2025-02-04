@@ -45,7 +45,7 @@ platform :mac do
 
       if ENV['GENERATE_PKG']
         match(
-          type: "developer_id_installer",
+          type: "developer_id",
           additional_cert_types: "developer_id_installer",
           storage_mode: "git",
           git_url: "git@github.com:#{match_org}/#{match_repo}.git",
@@ -173,6 +173,12 @@ platform :mac do
         }
       }
     )
+
+    #notarize(
+    #  package: "#{ENV['BUILD_PATH']}/developer-id.app",
+    #  bundle_id: "#{ENV['MAC_BUNDLE_ID']}",
+    #  username: "#{ENV['APPLE_CONNECT_EMAIL']}"
+    #)
   end
 
   desc "Create .pkg (Developer ID Installer)"
@@ -191,7 +197,7 @@ platform :mac do
     update_code_signing_settings(
       use_automatic_signing: false,
       team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_installer_macos_team-id"],
-      code_sign_identity: 'Developer ID Application',
+      code_sign_identity: 'Developer ID Installer',
       targets: "#{ENV['PROJECT_TARGET']}",
       bundle_identifier: "#{ENV['MAC_BUNDLE_ID']}",
       path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
@@ -222,5 +228,7 @@ platform :mac do
         }
       }
     )
+
+    #notarize()
   end
 end
