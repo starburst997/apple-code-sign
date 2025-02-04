@@ -3,6 +3,9 @@ name: Build iOS
 on: 
   workflow_call:
     inputs:
+      use_session:
+        required: false
+        type: boolean
       project_path:
         required: true
         type: string
@@ -73,6 +76,7 @@ jobs:
           APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
           APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
+          USE_SESSION: ${{ inputs.use_session }}
 
           IOS_BUILD_PATH: ${{ format('{0}/{1}', github.workspace, inputs.project_path) }}
           IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
