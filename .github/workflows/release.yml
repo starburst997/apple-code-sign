@@ -76,6 +76,12 @@ jobs:
           name: build-macos
           path: macos
 
+      - name: Rename release
+        working-directory: macos
+        run: |
+          mv developer-id.app.zip Test.app.zip
+          mv developer-id.dmg Test.dmg
+
       - name: Release
         uses: starburst997/action-gh-release@v2
         with:
@@ -84,6 +90,7 @@ jobs:
           tag_name: v${{ needs.version.outputs.version }}
           files: |
             macos/Test.app.zip
+            macos/Test.dmg
 
       - name: Cleanup to avoid storage limit
         if: always()
