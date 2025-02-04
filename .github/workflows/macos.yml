@@ -114,6 +114,14 @@ jobs:
           [[ $GENERATE_PKG == true ]] && bundle exec fastlane mac pkg
           echo "Finshed!"
 
+      - name: Install zip
+        uses: starburst997/action-zip@v1
+      - name: Zip .app
+        working-directory: build/developer-id.app
+        run: |
+          rm -Rf ../developer-id.app.zip
+          zip -qq -r ../developer-id.app.zip *
+
       - name: Create DMG
         if: ${{ inputs.generate_developer_id && inputs.generate_dmg }}
         shell: bash
