@@ -338,6 +338,6 @@ The workflow will also automatically increment the build number and save it as a
 
 I've also included a [release workflow](https://github.com/starburst997/apple-code-sign/blob/main/.github/workflows/release.yml) as an example.
 
-The macOS builds also includes an optional **.dmg** and **.app.zip** both are notarized and stapled.
+The macOS builds also includes an optional **.dmg** and **.app.zip** ready to be hosted, both are [notarized and stapled](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution).
 
 <br/>
