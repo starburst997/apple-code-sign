@@ -164,6 +164,7 @@ jobs:
 
       - name: Cleanup
         run: |
+          rm -Rf build/${{ inputs.project_target }}.app
           rm -Rf build/developer-id.app
           ls -la build
 
