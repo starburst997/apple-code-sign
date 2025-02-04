@@ -119,5 +119,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact }}
         with:
-          name: build-mac
+          name: build-macos
           path: build
