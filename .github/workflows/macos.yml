@@ -116,10 +116,10 @@ jobs:
           echo "Finshed!"
 
       - name: Zip .app
-        working-directory: build/developer-id.app
+        working-directory: build
         run: |
-          rm -Rf ../developer-id.app.zip
-          zip -qq -r ../developer-id.app.zip *
+          rm -Rf developer-id.app.zip
+          zip -qq -r developer-id.app.zip developer-id.app
 
       - name: Create DMG
         if: ${{ inputs.generate_developer_id && inputs.generate_dmg }}
