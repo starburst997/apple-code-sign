@@ -12,6 +12,9 @@ on:
       generate_ios:
         required: false
         type: boolean
+      generate_appstore:
+        required: false
+        type: boolean
       generate_developer_id:
         required: false
         type: boolean
@@ -82,6 +85,7 @@ jobs:
           MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
+          GENERATE_APPSTORE: ${{ inputs.generate_appstore }}
           GENERATE_IOS: ${{ inputs.generate_ios }}
           GENERATE_MACOS: ${{ inputs.generate_macos }}
           GENERATE_PKG: ${{ inputs.generate_pkg }}
