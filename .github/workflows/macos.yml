@@ -111,7 +111,7 @@ jobs:
           echo "Finshed!"
 
       - name: Create DMG
-        if: ${{ inputs.generate_developer_id && input.generate_dmg }}
+        if: ${{ inputs.generate_developer_id && inputs.generate_dmg }}
         shell: bash
         run: |
           echo LOL
