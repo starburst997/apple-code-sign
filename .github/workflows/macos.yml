@@ -116,6 +116,7 @@ jobs:
           echo "Finshed!"
 
       - name: Zip .app
+        if: ${{ inputs.generate_developer_id }}
         working-directory: build
         run: |
           rm -Rf developer-id.app.zip
