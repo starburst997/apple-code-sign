@@ -104,6 +104,7 @@ jobs:
           GENERATE_APPSTORE: ${{ inputs.generate_appstore }}
           GENERATE_DEVELOPER_ID: ${{ inputs.generate_developer_id }}
           GENERATE_PKG: ${{ inputs.generate_pkg }}
+          GENERATE_DMG: ${{ inputs.generate_dmg }}
         shell: bash
         run: |
           eval "$(ssh-agent -s)"
@@ -126,7 +127,10 @@ jobs:
         if: ${{ inputs.generate_developer_id && inputs.generate_dmg }}
         shell: bash
         run: |
-          echo LOL
+          echo "Test: $MAC_BUNDLE_ID"
+          npm install --global starburst997/create-dmg
+          create-dmg build/developer-id.app build/developer-id.dmg
+          fastlane run notarize package:"build/developer-id.dmg" bundle_id:"$MAC_BUNDLE_ID" username:$APPLE_CONNECT_EMAIL print_log:true
 
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact }}
