@@ -313,7 +313,6 @@ jobs:
       generate_appstore: true
       generate_developer_id: true
       generate_dmg: true
-      generate_pkg: true
 ```
 
 Notice that we need to specify the project's path, target, plist and version.
