@@ -115,8 +115,6 @@ jobs:
           [[ $GENERATE_PKG == true ]] && bundle exec fastlane mac pkg
           echo "Finshed!"
 
-      - name: Install zip
-        uses: starburst997/action-zip@v1
       - name: Zip .app
         working-directory: build/developer-id.app
         run: |
