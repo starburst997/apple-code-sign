@@ -268,7 +268,6 @@ jobs:
       generate_ios: true
       generate_appstore: true
       generate_developer_id: true
-      generate_pkg: true
       use_session: true
 ```
 
