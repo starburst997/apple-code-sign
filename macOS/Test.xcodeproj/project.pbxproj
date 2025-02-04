@@ -258,6 +258,7 @@
 				CODE_SIGN_ENTITLEMENTS = Test/Test.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Test/Info.plist;
+				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jd.boiv.in.Test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -271,6 +272,7 @@
 				CODE_SIGN_ENTITLEMENTS = Test/Test.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Test/Info.plist;
+				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jd.boiv.in.Test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
