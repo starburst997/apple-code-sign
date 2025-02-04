@@ -183,6 +183,38 @@ platform :mac do
     )
   end
 
+  desc "Notarize .dmg (Developer ID)"
+  lane :notarize_dmg do
+    setup_ci
+
+    sync_certificates
+
+    # Unity has specific requirements around codesigning that we have to handle
+    # See https://github.com/fastlane/fastlane/discussions/17458 for context
+    update_code_signing_settings(
+      use_automatic_signing: true,
+      path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}"
+    )
+
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      team_id: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_team-id"],
+      code_sign_identity: 'Developer ID Application',
+      targets: "#{ENV['PROJECT_TARGET']}",
+      bundle_identifier: "#{ENV['MAC_BUNDLE_ID']}",
+      path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+      profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"],
+      profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos"]
+    )
+
+    notarize(
+      package: "#{ENV['BUILD_PATH']}/developer-id.dmg",
+      bundle_id: "#{ENV['MAC_BUNDLE_ID']}",
+      username: "#{ENV['APPLE_CONNECT_EMAIL']}",
+      print_log: true
+    )
+  end
+
   # TODO: Not working, having issue with the provisioning profile
   desc "Create .pkg (Developer ID Installer)"
   lane :build_pkg do
