@@ -34,6 +34,7 @@ jobs:
       artifact: true
       generate_appstore: true
       generate_developer_id: true
+      generate_dmg: true
       generate_pkg: true
 
   build-ios:
