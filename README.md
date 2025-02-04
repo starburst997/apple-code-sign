@@ -50,6 +50,8 @@ Now run:
 bundle install
 bundle lock --add-platform x86_64-linux
 bundle lock --add-platform arm64-darwin-23
+bundle lock --add-platform x86_64-darwin-21
+bundle lock --add-platform x86_64-darwin-22
 ```
 
 Adding the additional platforms ensure we can call `fastlane` from the Github Action running on `ubuntu-latest` or `macos-latest` (in the future, the mac platform id might change).
