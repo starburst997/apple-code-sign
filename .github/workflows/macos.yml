@@ -54,7 +54,7 @@ jobs:
           submodules: recursive
           token: ${{ secrets.GH_PAT }}
           lfs: true
-      - uses: starburst997/setup-ruby@add-platform
+      - uses: starburst997/setup-ruby@jd
         with:
           ruby-version: 3.2
           bundler-cache: true

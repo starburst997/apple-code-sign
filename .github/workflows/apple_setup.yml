@@ -34,10 +34,11 @@ jobs:
       match_deploy_key: ${{ steps.fastlane.outputs.match_deploy_key }}
     steps:
       - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: starburst997/setup-ruby@jd
         with:
           ruby-version: 3.2
           bundler-cache: true
+          add-platform: true
 
       - name: Fastlane
         id: fastlane
