@@ -30,8 +30,6 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
-    outputs:
-      match_deploy_key: ${{ steps.fastlane.outputs.match_deploy_key }}
     steps:
       - uses: actions/checkout@v4
       - uses: starburst997/setup-ruby@jd
@@ -45,28 +43,10 @@ jobs:
         shell: bash
         run: |
           bundle exec fastlane ios init_ci
-          echo "match_deploy_key=$(cat MATCH_DEPLOY_KEY | base64 --wrap=0)" >> $GITHUB_OUTPUT
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-          GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
-          MATCH_REPOSITORY: ${{ secrets.MATCH_REPOSITORY }}
 
-  generate_certs:
-    runs-on: ${{ inputs.macos_vm }}
-    needs: [setup]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2
-          bundler-cache: true
-
-      - name: Fastlane
-        shell: bash
-        run: |
           eval "$(ssh-agent -s)"
-          MATCH_DEPLOY_KEY=$(echo "${{ needs.setup.outputs.match_deploy_key }}" | base64 -d)
-          ssh-add - <<< "${MATCH_DEPLOY_KEY}"
+          ssh-add - <<< "$(cat MATCH_DEPLOY_KEY)"
+
           [[ $GENERATE_IOS == true ]] && bundle exec fastlane ios sync_certificates
           [[ $GENERATE_MACOS == true ]] && bundle exec fastlane mac sync_certificates
           echo "Finshed!"
