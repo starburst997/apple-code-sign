@@ -211,17 +211,19 @@ By using `import_from_git` we can reference external *Fastfile* files, but feel 
 
 #### fastlane/Appfile
 ```ruby
-apple_dev_portal_id(ENV['APPLE_DEVELOPER_EMAIL'])
-itunes_connect_id(ENV['APPLE_CONNECT_EMAIL'])
-
-team_id(ENV['APPLE_TEAM_ID'])
-itc_team_id(ENV['APPLE_TEAM_ID'])
-
 for_platform :ios do
+  apple_dev_portal_id(ENV['APPLE_DEVELOPER_EMAIL'])
+  itunes_connect_id(ENV['APPLE_CONNECT_EMAIL'])
+  team_id(ENV['APPLE_TEAM_ID'])
+  itc_team_id(ENV['APPLE_TEAM_ID'])
   app_identifier(ENV['IOS_BUNDLE_ID'])
 end
 
 for_platform :mac do
+  apple_dev_portal_id(ENV['APPLE_DEVELOPER_EMAIL'])
+  itunes_connect_id(ENV['APPLE_CONNECT_EMAIL'])
+  team_id(ENV['APPLE_TEAM_ID'])
+  itc_team_id(ENV['APPLE_TEAM_ID'])
   app_identifier(ENV['MAC_BUNDLE_ID'])
 end
 ```
