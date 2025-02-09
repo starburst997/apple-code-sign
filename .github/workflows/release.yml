@@ -76,6 +76,9 @@ jobs:
         run: |
           mv developer-id.app.zip Test.app.zip
           mv developer-id.dmg Test.dmg
+          rm -f developer-id.app.dSYM.zip
+          rm -f appstore.app.dSYM.zip
+          rm -f appstore.pkg
 
       - name: Release
         uses: starburst997/release-action@v1
