@@ -83,7 +83,6 @@ jobs:
       - name: Test with bad name
         run: |
           cp ${{ inputs.project_path }}/${{ inputs.entitlements_path }} ${{ inputs.project_path }}/Unity.entitlements
-          ls ${{ inputs.project_path }} -la
 
       - name: Run fastlane
         env:
