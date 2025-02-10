@@ -18,6 +18,10 @@ on:
       plist_path:
         required: false
         type: string
+      entitlements_path:
+        required: false
+        default: 'false'
+        type: string
       version:
         required: true
         type: string
@@ -99,7 +103,7 @@ jobs:
           PROJECT_TARGET: ${{ inputs.project_target }}
           XCODEPROJ_PATH: ${{ inputs.xcodeproj_path }}
           PLIST_PATH: ${{ inputs.plist_path }}
-          ENTITLEMENTS: false
+          ENTITLEMENTS: ${{ inputs.entitlements_path }}
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: build
 
@@ -148,6 +152,7 @@ jobs:
           PROJECT_TARGET: ${{ inputs.project_target }}
           XCODEPROJ_PATH: ${{ inputs.xcodeproj_path }}
           PLIST_PATH: ${{ inputs.plist_path }}
+          ENTITLEMENTS: ${{ inputs.entitlements_path }}
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: build
 
