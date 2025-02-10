@@ -119,6 +119,13 @@ platform :mac do
       profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_appstore_macos"]
     )
 
+    if ENV['ENTITLEMENTS'] != ''
+      update_code_signing_settings(
+        path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+        entitlements_file_path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['ENTITLEMENTS']}"
+      )
+    end
+
     if ENV['VERSION'] != 'false'
       increment_version_number(
         version_number: "#{ENV['VERSION']}.#{ENV['BUILD_NUMBER']}",
@@ -169,6 +176,13 @@ platform :mac do
       profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"],
       profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos"]
     )
+
+    if ENV['ENTITLEMENTS'] != ''
+      update_code_signing_settings(
+        path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+        entitlements_file_path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['ENTITLEMENTS']}"
+      )
+    end
 
     if ENV['VERSION'] != 'false'
       increment_version_number(
@@ -228,6 +242,13 @@ platform :mac do
       profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos"]
     )
 
+    if ENV['ENTITLEMENTS'] != ''
+      update_code_signing_settings(
+        path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+        entitlements_file_path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['ENTITLEMENTS']}"
+      )
+    end
+
     notarize(
       package: "#{ENV['BUILD_PATH']}/developer-id.dmg",
       bundle_id: "#{ENV['MAC_BUNDLE_ID']}",
@@ -260,6 +281,13 @@ platform :mac do
       profile_name: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos_profile-name"],
       profile_uuid: ENV["sigh_#{ENV['MAC_BUNDLE_ID']}_developer_id_macos"]
     )
+
+    if ENV['ENTITLEMENTS'] != ''
+      update_code_signing_settings(
+        path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
+        entitlements_file_path: "#{ENV['MAC_BUILD_PATH']}/#{ENV['ENTITLEMENTS']}"
+      )
+    end
 
     if ENV['VERSION'] != 'false'
       increment_version_number(
