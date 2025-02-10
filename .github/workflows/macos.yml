@@ -80,10 +80,6 @@ jobs:
           amount: 1
           token: ${{ secrets.GH_PAT }}
 
-      - name: Test with bad name
-        run: |
-          mv ${{ inputs.project_path }}/${{ inputs.entitlements_path }} ${{ inputs.project_path }}/Unity.entitlements
-
       - name: Run fastlane
         env:
           APPLE_CONNECT_EMAIL: ${{ secrets.APPLE_CONNECT_EMAIL }}
@@ -107,7 +103,7 @@ jobs:
           PROJECT_TARGET: ${{ inputs.project_target }}
           XCODEPROJ_PATH: ${{ inputs.xcodeproj_path }}
           PLIST_PATH: ${{ inputs.plist_path }}
-          ENTITLEMENTS: Unity.entitlements
+          ENTITLEMENTS: ${{ inputs.entitlements_path }}
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: build
 
