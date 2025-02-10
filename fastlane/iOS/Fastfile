@@ -84,7 +84,7 @@ platform :ios do
       profile_uuid: ENV["sigh_#{ENV['IOS_BUNDLE_ID']}_appstore"]
     )
 
-    if ENV['ENTITLEMENTS'] != ''
+    if ENV['ENTITLEMENTS'] != 'false'
       update_code_signing_settings(
         path: "#{ENV['IOS_BUILD_PATH']}/#{ENV['XCODEPROJ_PATH']}",
         entitlements_file_path: "#{ENV['IOS_BUILD_PATH']}/#{ENV['ENTITLEMENTS']}"

@@ -99,6 +99,7 @@ jobs:
           PROJECT_TARGET: ${{ inputs.project_target }}
           XCODEPROJ_PATH: ${{ inputs.xcodeproj_path }}
           PLIST_PATH: ${{ inputs.plist_path }}
+          ENTITLEMENTS: false
           VERSION: "${{ inputs.version }}"
           BUILD_PATH: build
 
