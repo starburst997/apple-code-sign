@@ -8,7 +8,7 @@ The following text is a copy of my blog post: [**Code Signing for Apple without 
 
 **TL;DR**: By using [fastlane match](https://docs.fastlane.tools/actions/match/) and [Github Action](https://github.com/features/actions) we can compile and publish a code-signed iOS / macOS app without ever using a mac in person.
 
-*(Part two of my series on code-signing / distributing apps, check [Part 1 on Windows](https://github.com/starburst997/windows-code-sign))*
+*(Part two of my series on code-signing / distributing apps, check [Part 2 on Android](https://github.com/starburst997/android-code-sign))*
 
 <br/>
 
@@ -337,5 +337,13 @@ The workflow will also automatically increment the build number and save it as a
 I've also included a [release workflow](https://github.com/starburst997/apple-code-sign/blob/main/.github/workflows/release.yml) as an example.
 
 The macOS builds also includes an optional **.dmg** and **.app.zip** ready to be hosted, both are [notarized and stapled](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution).
+
+<br/>
+
+Code-signing / distributing app series:
+- Part 1: [Code Signing for Windows as an Individual Developer](https://github.com/starburst997/windows-code-sign)
+- Part 2: [Code Signing for Apple without a mac](https://github.com/starburst997/apple-code-sign)
+- Part 3: [Code Signing for Android via Github Actions](https://github.com/starburst997/android-code-sign)
+- Part 4: [Build and publish your Unity Game using Github Actions](https://github.com/starburst997/windows-code-sign)
 
 <br/>
